@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="p1000_body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C0EAF7" stop-opacity="0.9" />
+      <stop offset="30%" stop-color="#EFF9FD" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#ACE1F6" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#84CEEE" stop-opacity="0.92" />
+    </linearGradient>
+    <linearGradient id="p1000_cap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00A8E8" />
+      <stop offset="50%" stop-color="#0077B6" />
+      <stop offset="100%" stop-color="#023E8A" />
+    </linearGradient>
+    <linearGradient id="p1000_label" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#007EA7" />
+      <stop offset="40%" stop-color="#00A8E8" />
+      <stop offset="100%" stop-color="#003459" />
+    </linearGradient>
+    <filter id="shadow1000" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#003459" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <ellipse cx="150" cy="374" rx="84" ry="14" fill="#003459" opacity="0.14" />
+
+  <g filter="url(#shadow1000)">
+    <!-- Cap -->
+    <rect x="133" y="30" width="34" height="22" rx="4" fill="url(#p1000_cap)" />
+    <line x1="133" y1="37" x2="167" y2="37" stroke="#ffffff" stroke-opacity="0.7" stroke-width="1.5" />
+    <line x1="133" y1="43" x2="167" y2="43" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1" />
+    <rect x="129" y="52" width="42" height="6" rx="2" fill="#005B82" />
+
+    <!-- 1 Litre Tall Bottle -->
+    <path d="M135 58 L135 88 C135 115, 96 135, 96 160 L96 345 C96 362, 108 370, 126 370 L174 370 C192 370, 204 362, 204 345 L204 160 C204 135, 165 115, 165 88 L165 58 Z"
+          fill="url(#p1000_body)" stroke="#74C0FC" stroke-width="2" />
+
+    <!-- Wave ribs -->
+    <path d="M98 165 Q 150 176, 202 165" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.8"/>
+    <path d="M97 185 Q 150 195, 203 185" stroke="#74C0FC" stroke-width="2" fill="none" opacity="0.55"/>
+    <path d="M97 325 Q 150 334, 203 325" stroke="#74C0FC" stroke-width="2.5" fill="none" opacity="0.5"/>
+
+    <!-- Premium Brand Label -->
+    <path d="M96 200 C96 200, 150 208, 204 200 L204 295 C204 295, 150 303, 96 295 Z" fill="url(#p1000_label)" />
+    <circle cx="150" cy="230" r="17" fill="#FFFFFF" opacity="0.95" />
+    <!-- Water Drop & Leaf -->
+    <path d="M150 218 C150 218, 142 228, 142 233 C142 237.4, 145.6 241, 150 241 C154.4 241, 158 237.4, 158 233 C158 228, 150 218, 150 218 Z" fill="#00A8E8" />
+    <path d="M150 228 C152 225, 155 226, 155 228 C155 231, 151 232, 150 232 Z" fill="#00C49F" />
+
+    <text x="150" y="262" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="13" fill="#FFFFFF" text-anchor="middle" letter-spacing="1.5">NBS RAJ</text>
+    <text x="150" y="278" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="10" fill="#E0F7FA" text-anchor="middle" letter-spacing="1">1 LITRE</text>
+    <text x="150" y="289" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="7" fill="#90E0EF" text-anchor="middle" letter-spacing="0.5">NATURAL MINERALS</text>
+
+    <!-- Light reflections -->
+    <path d="M104 110 L104 355" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M112 120 L112 185" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- Pack Badge Overlay -->
+  <g transform="translate(198, 45)">
+    <circle cx="26" cy="26" r="25" fill="#00A8E8" stroke="#ffffff" stroke-width="2" />
+    <text x="26" y="21" font-family="'Segoe UI', sans-serif" font-size="7.5" font-weight="800" fill="#ffffff" text-anchor="middle">PACK OF</text>
+    <text x="26" y="34" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">15+1</text>
+  </g>
+</svg>

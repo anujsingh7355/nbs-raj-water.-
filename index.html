@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NBS RAJ WATER | Pure Water. Trusted Quality. Doorstep Delivery</title>
+  <meta name="description" content="Fresh, safe, and reliable packaged drinking water delivered to your doorstep. Order 250ml, 500ml, 1L, 2L bottles, 20L jars, and bulk water packs with fast delivery." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. STICKY RESPONSIVE HEADER
+       ========================================================================= -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <!-- Logo -->
+      <a href="#home" class="brand-logo-link" onclick="scrollToSection('home')">
+        <img src="assets/logo.svg" alt="NBS RAJ WATER Logo" class="brand-logo-img" />
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="#home" class="nav-link" onclick="scrollToSection('home')">Home</a>
+        <a href="#about" class="nav-link" onclick="scrollToSection('about')">About Us</a>
+        <a href="#products" class="nav-link" onclick="scrollToSection('products')">Products</a>
+        <a href="#quality" class="nav-link" onclick="scrollToSection('quality')">Why Us</a>
+        <a href="#bulk" class="nav-link" onclick="scrollToSection('bulk')">Bulk Orders</a>
+        <a href="#contact" class="nav-link" onclick="scrollToSection('contact')">Contact</a>
+      </nav>
+
+      <!-- Header Actions: Search, My Orders, Cart, Order Now CTA -->
+      <div class="header-actions">
+        <!-- Quick Header Search -->
+        <div class="header-search-wrap">
+          <svg class="header-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="headerSearchInput" class="header-search-input" placeholder="Search water packs..." />
+        </div>
+
+        <!-- My Orders Button -->
+        <button type="button" class="icon-action-btn" onclick="openMyOrdersModal()" title="View your past orders">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>My Orders</span>
+        </button>
+
+        <!-- Cart Button with Counter Badge -->
+        <button type="button" class="icon-action-btn cart-icon-btn" onclick="openCartDrawer()" title="View shopping cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Cart</span>
+          <span class="cart-count-badge hidden" id="headerCartCount">0</span>
+        </button>
+
+        <!-- Order Now Button -->
+        <button type="button" class="btn btn-primary btn-header-order" onclick="scrollToSection('products')">
+          Order Now
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open mobile menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <div class="mobile-nav-header">
+      <img src="assets/logo.svg" alt="NBS RAJ WATER" style="height: 42px;" />
+      <button type="button" class="drawer-close-btn" id="mobileNavClose" aria-label="Close menu">✕</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+      <li><a href="#about" onclick="scrollToSection('about')">About Us</a></li>
+      <li><a href="#products" onclick="scrollToSection('products')">Our Products</a></li>
+      <li><a href="#quality" onclick="scrollToSection('quality')">Why Choose Us</a></li>
+      <li><a href="#howitworks" onclick="scrollToSection('howitworks')">How It Works</a></li>
+      <li><a href="#bulk" onclick="scrollToSection('bulk')">Bulk Orders</a></li>
+      <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
+    </ul>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+      <button type="button" class="btn btn-outline" onclick="openMyOrdersModal(); closeMobileMenu();">
+        📄 View My Orders
+      </button>
+      <button type="button" class="btn btn-whatsapp" onclick="openDirectWhatsAppChat(); closeMobileMenu();">
+        💬 WhatsApp Direct
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. HERO SECTION
+       ========================================================================= -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text-col">
+          <div class="hero-badge-pill">
+            <span class="hero-badge-dot"></span>
+            <span>100% Certified Packaged Drinking Water</span>
+          </div>
+
+          <h1 class="hero-title">
+            Pure Water.<br />
+            <span>Trusted Quality.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Fresh, safe and reliable drinking water delivered to your doorstep. Enriched with natural minerals through an advanced multi-stage RO, UV and Ozonisation process.
+          </p>
+
+          <div class="hero-cta-group">
+            <button type="button" class="btn btn-primary" onclick="scrollToSection('products')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              <span>Shop Now</span>
+            </button>
+
+            <button type="button" class="btn btn-whatsapp" onclick="openDirectWhatsAppChat('Hello NBS RAJ WATER, I want to order drinking water.')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.18 8.18 0 0 1-5.82 2.41c-1.46 0-2.88-.39-4.14-1.13l-.3-.18-3.11.82.83-3.04-.2-.31a8.183 8.183 0 0 1-1.25-4.4c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+              </svg>
+              <span>Order on WhatsApp</span>
+            </button>
+          </div>
+
+          <!-- Trust Strip -->
+          <div class="hero-trust-strip">
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>100% Hygienic PET</span>
+            </div>
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>RO + UV + Ozonised</span>
+            </div>
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Fast Doorstep Delivery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Graphic Illustration -->
+        <div class="hero-visual-col">
+          <img src="assets/images/hero-water.svg" alt="NBS RAJ WATER Showcase Bottles" class="hero-illustration" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. PRODUCT SECTION
+       ========================================================================= -->
+  <section class="section-padding" id="products">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Pure Hydration Range</span>
+        <h2 class="section-title">Our Products</h2>
+        <p class="section-subtitle">
+          Choose from convenient on-the-go bottles to high-capacity 20 Litre dispenser jars for your home, office, and large celebrations.
+        </p>
+      </div>
+
+      <!-- Filter Tabs & Real-time Search -->
+      <div class="filter-search-container">
+        <div class="filter-tabs-row" role="tablist">
+          <button type="button" class="cat-filter-btn active" data-category="all">All Products</button>
+          <button type="button" class="cat-filter-btn" data-category="bottles">Bottles (250ml - 2L)</button>
+          <button type="button" class="cat-filter-btn" data-category="cans">20L Home & Office</button>
+          <button type="button" class="cat-filter-btn" data-category="bulk">Bulk / Events</button>
+        </div>
+
+        <div class="product-search-input-wrap">
+          <svg class="product-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="productSearchInput" class="product-search-input" placeholder="Search bottle size, pack..." />
+        </div>
+      </div>
+
+      <!-- Dynamic Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+
+      <!-- No Products Found Fallback -->
+      <div class="no-results-state hidden" id="noProductsFound">
+        <h3>No matching water packs found</h3>
+        <p>Try searching for "20 Litre", "1 Litre", or "500 ML", or clear your filter.</p>
+        <button type="button" class="btn btn-outline" id="clearSearchBtn">Reset Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. WHY CHOOSE NBS RAJ WATER? (QUALITY SECTION)
+       ========================================================================= -->
+  <section class="section-padding quality-section" id="quality">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Pure & Certified</span>
+        <h2 class="section-title">Why Choose NBS RAJ WATER?</h2>
+        <p class="section-subtitle">
+          Engineered with uncompromising purity, zero chemical touches, and advanced mineral replenishment for your family's daily vitality.
+        </p>
+      </div>
+
+      <div class="quality-grid">
+        <!-- Card 1 -->
+        <div class="quality-card">
+          <div class="quality-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3>Quality Assured</h3>
+          <p>Every batch goes through stringent multi-parameter laboratory tests ensuring purity in accordance with national safety standards.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="quality-card">
+          <div class="quality-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          </div>
+          <h3>Hygienic Packaging</h3>
+          <p>Bottled in automated, untouched hands-free cleanrooms using 100% food-grade, BPA-free recyclable PET containers.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="quality-card">
+          <div class="quality-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+          </div>
+          <h3>Fresh & Safe</h3>
+          <p>Enriched with balanced natural minerals (Magnesium & Potassium) to deliver crisp taste and optimal body hydration.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="quality-card">
+          <div class="quality-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          </div>
+          <h3>Fast Delivery</h3>
+          <p>Prompt express dispatch network ensures your daily water cans and carton packs arrive at your door safely and punctually.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="quality-card">
+          <div class="quality-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </div>
+          <h3>Home & Office Delivery</h3>
+          <p>Flexible recurring supply plans for families, residential complexes, corporate workplaces, and co-working hubs.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="quality-card">
+          <div class="quality-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><line x1="1" y1="3" x2="23" y2="3"></line><path d="M10 12h4"></path></svg>
+          </div>
+          <h3>Bulk Orders Available</h3>
+          <p>Dedicated logistics and subsidized wholesale rates for events, hotels, banquet halls, restaurants, and institutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. HOW IT WORKS (4 STEPS)
+       ========================================================================= -->
+  <section class="section-padding" id="howitworks">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Seamless Process</span>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">
+          Ordering pure water has never been easier. 4 simple steps to receive fresh NBS RAJ WATER at your door.
+        </p>
+      </div>
+
+      <div class="how-it-works-grid">
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-num-pill">Step 1</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3>Choose Your Product</h3>
+          <p>Select your required bottle sizes or 20L cans from our curated pure water catalog.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-num-pill">Step 2</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          </div>
+          <h3>Add to Cart</h3>
+          <p>Adjust pack quantities smoothly in your cart and review your delivery savings.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-num-pill">Step 3</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <h3>Enter Delivery Details</h3>
+          <p>Provide your delivery address, PIN code, and preferred payment mode (COD, UPI, Online).</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+          <div class="step-num-pill">Step 4</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.18 8.18 0 0 1-5.82 2.41c-1.46 0-2.88-.39-4.14-1.13l-.3-.18-3.11.82.83-3.04-.2-.31a8.183 8.183 0 0 1-1.25-4.4c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+            </svg>
+          </div>
+          <h3>Order Through WhatsApp</h3>
+          <p>Instant click-to-chat sends your complete order summary directly to our dispatch desk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. BULK ORDER SECTION
+       ========================================================================= -->
+  <section class="container" id="bulk">
+    <div class="bulk-section">
+      <div class="bulk-grid">
+        <div class="bulk-info-col">
+          <span class="bulk-tag">Commercial &amp; Event Solutions</span>
+          <h2 class="bulk-title">Special Water Supply for Bulk Requirements</h2>
+          <p class="bulk-desc">
+            Are you organizing a grand wedding, managing a hotel, office facility, or catering event? NBS RAJ WATER offers prioritized dispatch, discounted tiered rates, and dedicated delivery vans.
+          </p>
+
+          <div class="bulk-target-badges">
+            <span class="target-badge">🏢 Offices</span>
+            <span class="target-badge">🏨 Hotels</span>
+            <span class="target-badge">🍽️ Restaurants</span>
+            <span class="target-badge">🎉 Events &amp; Weddings</span>
+            <span class="target-badge">🏪 Shops &amp; Supermarkets</span>
+            <span class="target-badge">🏫 Institutions</span>
+          </div>
+
+          <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+            <div class="bulk-feature-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C49F" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Wholesale Bulk Pricing</span>
+            </div>
+            <div class="bulk-feature-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C49F" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Scheduled Periodic Delivery</span>
+            </div>
+            <div class="bulk-feature-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C49F" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Official GST Invoices</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bulk-cta-col">
+          <button type="button" class="btn btn-whatsapp" style="font-size: 1.05rem; padding: 16px 32px;" onclick="openBulkOrderModal()">
+            <span>Request Bulk Order</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+          <span style="font-size: 0.85rem; color: #A0C0D6;">Immediate quote via WhatsApp within 15 minutes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. ABOUT SECTION
+       ========================================================================= -->
+  <section class="section-padding" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text-content">
+          <span class="section-tag">About NBS RAJ WATER</span>
+          <h2 class="section-title">Pure Drinking Water Born From Nature &amp; Advanced Science</h2>
+          <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 20px;">
+            At <strong>NBS RAJ WATER</strong>, our mission is simple: to make pristine, crystal-clear, mineral-balanced packaged drinking water accessible to every family, workplace, and institution with unfailing reliability.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+            Our state-of-the-art purification plant combines multi-stage Reverse Osmosis (RO), Ultra-Violet (UV) disinfection, and Micron filtration with Ozonisation to eradicate 100% of physical and microbiological contaminants while retaining natural essential salts.
+          </p>
+
+          <div class="about-features-list">
+            <div class="about-feature-item">
+              <div class="about-feature-icon">✓</div>
+              <div class="about-feature-text">
+                <h4>Quality-Focused Processing</h4>
+                <p>Triple filtration with real-time TDS and pH monitoring for healthy drinking water.</p>
+              </div>
+            </div>
+
+            <div class="about-feature-item">
+              <div class="about-feature-icon">✓</div>
+              <div class="about-feature-text">
+                <h4>Hygienic Packaging</h4>
+                <p>Zero human-contact automated bottling plant with tamper-evident caps.</p>
+              </div>
+            </div>
+
+            <div class="about-feature-item">
+              <div class="about-feature-icon">✓</div>
+              <div class="about-feature-text">
+                <h4>Reliable Home &amp; Office Supply</h4>
+                <p>Trained local delivery associates who bring fresh cans directly to your doorstep.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-purity-stats">
+          <div class="stat-item">
+            <div class="stat-num">8+</div>
+            <div class="stat-lbl">Purification Stages</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">100%</div>
+            <div class="stat-lbl">Food Grade PET</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">50K+</div>
+            <div class="stat-lbl">Bottles Delivered</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">99.9%</div>
+            <div class="stat-lbl">Customer Purity Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. CONTACT SECTION
+       ========================================================================= -->
+  <section class="section-padding" style="background: var(--surface-alt);" id="contact">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Get in Touch</span>
+        <h2 class="section-title">Contact NBS RAJ WATER</h2>
+        <p class="section-subtitle">
+          Have an inquiry, custom requirement, or delivery feedback? Our customer service team is here to assist you daily.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Contact Details Card -->
+        <div class="contact-info-card">
+          <h3 class="contact-info-title">Head Office &amp; Bottling Plant</h3>
+
+          <div class="contact-details-list">
+            <div class="contact-detail-row">
+              <div class="contact-detail-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="contact-detail-text">
+                <h4>Phone Number</h4>
+                <p><a href="tel:+917355415447">+91 73554 15447</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-row">
+              <div class="contact-detail-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </div>
+              <div class="contact-detail-text">
+                <h4>WhatsApp Order Desk</h4>
+                <p><a href="javascript:void(0)" onclick="openDirectWhatsAppChat()">+91 73554 15447</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-row">
+              <div class="contact-detail-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="contact-detail-text">
+                <h4>Email Support</h4>
+                <p><a href="mailto:orders@nbsrajwater.com">orders@nbsrajwater.com</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-row">
+              <div class="contact-detail-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="contact-detail-text">
+                <h4>Plant Address</h4>
+                <p>Plot No. 42, Water Purification Plant, Industrial Area, Sector 5, India</p>
+              </div>
+            </div>
+
+            <div class="contact-detail-row">
+              <div class="contact-detail-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="contact-detail-text">
+                <h4>Delivery Hours</h4>
+                <p>Monday - Sunday: 7:00 AM - 9:00 PM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Maps Placeholder Card -->
+          <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); background: #E9F4F8; padding: 20px; text-align: center;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A8E8" stroke-width="2" style="margin: 0 auto 8px auto;">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+            <strong style="color: var(--primary-deep); display: block; font-size: 0.92rem;">Water Purification Plant Location</strong>
+            <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 12px;">Sector 5 Industrial Belt • Google Maps GPS Verified</span>
+            <a href="https://maps.google.com/?q=Packaged+Drinking+Water+Plant" target="_blank" rel="noopener" class="btn btn-outline-sm">
+              Open in Google Maps ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form Box -->
+        <div class="contact-form-box">
+          <h3 class="contact-info-title">Send Us a Direct Message</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Your Name *</label>
+              <input type="text" id="contactName" class="form-control" placeholder="e.g. Ramesh Sharma" required />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="contactPhone">Mobile Number (10 Digits) *</label>
+                <input type="tel" id="contactPhone" class="form-control" placeholder="7355415447" maxlength="10" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactEmail">Email Address</label>
+                <input type="email" id="contactEmail" class="form-control" placeholder="name@domain.com" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactSubject">Subject</label>
+              <select id="contactSubject" class="form-control">
+                <option value="Water Delivery Inquiry">Water Delivery Inquiry</option>
+                <option value="Home Subscription">Daily Home Delivery Subscription</option>
+                <option value="Office Supply">Office Supply Requirement</option>
+                <option value="Event Bulk Supply">Bulk Event Supply</option>
+                <option value="Feedback / Support">Feedback / Customer Support</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactMessage">Your Message *</label>
+              <textarea id="contactMessage" class="form-control" rows="4" placeholder="How can we help you today?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <span>Send Message via WhatsApp</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. SHOPPING CART DRAWER
+       ========================================================================= -->
+  <div class="modal-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="drawer-header">
+      <div class="drawer-title-row">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <h3 class="drawer-title">Shopping Cart</h3>
+      </div>
+      <button type="button" class="drawer-close-btn" onclick="closeCartDrawer()" aria-label="Close cart">✕</button>
+    </div>
+
+    <!-- Free Delivery Threshold Banner -->
+    <div id="cartFreeDeliveryBanner" class="cart-progress-banner"></div>
+
+    <div class="drawer-body">
+      <!-- Items Container -->
+      <div id="cartItemsList"></div>
+
+      <!-- Empty State -->
+      <div class="no-results-state hidden" id="cartEmptyState" style="border: none; padding: 40px 10px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="1.5" style="margin: 0 auto 12px auto;">
+          <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <h4 style="color: var(--primary-deep); font-size: 1.15rem; margin-bottom: 6px;">Your cart is empty</h4>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">Add packaged water bottles or 20L jars to begin.</p>
+        <button type="button" class="btn btn-primary" onclick="closeCartDrawer(); scrollToSection('products');">
+          Browse Products
+        </button>
+      </div>
+    </div>
+
+    <!-- Drawer Footer Financial Summary -->
+    <div class="drawer-footer hidden" id="cartDrawerFooter">
+      <div id="cartSavingsBanner" class="delivery-progress-unlocked hidden" style="margin-bottom: 12px; font-weight: 700;"></div>
+
+      <div class="cart-cost-row">
+        <span>Subtotal</span>
+        <span id="cartSubtotalDisplay" style="font-weight: 700; color: var(--primary-deep);">₹0</span>
+      </div>
+
+      <div class="cart-cost-row">
+        <span>Delivery Charge</span>
+        <span id="cartDeliveryDisplay" style="font-weight: 700;">₹0</span>
+      </div>
+
+      <div class="cart-grand-row">
+        <span>Grand Total</span>
+        <span id="cartGrandTotalDisplay">₹0</span>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn btn-outline" style="padding: 12px 16px; font-size: 0.85rem;" onclick="cart.clearCart()">
+          Clear
+        </button>
+        <button type="button" class="btn btn-primary" style="flex-grow: 1;" onclick="openCheckoutModal()">
+          <span>Proceed to Checkout</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       10. CHECKOUT MODAL WINDOW
+       ========================================================================= -->
+  <div class="modal-window" id="checkoutModal">
+    <div class="modal-backdrop-blur" onclick="closeCheckoutModal()"></div>
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3>Secure Checkout &amp; WhatsApp Order</h3>
+        <button type="button" class="drawer-close-btn" onclick="closeCheckoutModal()" aria-label="Close checkout">✕</button>
+      </div>
+
+      <div class="modal-content-body">
+        <form id="checkoutForm">
+          <div class="checkout-grid-layout">
+            <!-- Left: Delivery Address & Customer Form -->
+            <div class="checkout-form-fields">
+              <div class="form-group">
+                <label class="form-label" for="custName">Full Name *</label>
+                <input type="text" id="custName" class="form-control" placeholder="e.g. Rahul Sharma" required />
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="form-group">
+                  <label class="form-label" for="custMobile">Mobile Number *</label>
+                  <input type="tel" id="custMobile" class="form-control" placeholder="10 Digits (e.g. 7355415447)" maxlength="10" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="custWhatsapp">WhatsApp Number</label>
+                  <input type="tel" id="custWhatsapp" class="form-control" placeholder="Same as mobile if empty" maxlength="10" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="custAddress">Complete Street Address *</label>
+                <textarea id="custAddress" class="form-control" rows="2" placeholder="House/Flat No, Building, Street, Landmark" required></textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 12px;">
+                <div class="form-group">
+                  <label class="form-label" for="custCity">City *</label>
+                  <input type="text" id="custCity" class="form-control" placeholder="City" value="Jaipur" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="custState">State *</label>
+                  <input type="text" id="custState" class="form-control" placeholder="State" value="Rajasthan" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="custPincode">Pincode (6 Digits) *</label>
+                  <input type="text" id="custPincode" class="form-control" placeholder="302001" maxlength="6" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="custInstructions">Delivery Instructions (Optional)</label>
+                <input type="text" id="custInstructions" class="form-control" placeholder="e.g. Call before delivery, Leave at reception, Ring bell" />
+              </div>
+
+              <!-- Payment Method Selector -->
+              <div class="form-group">
+                <label class="form-label">Payment Method *</label>
+                <div class="payment-options-grid">
+                  <label class="payment-card-label">
+                    <input type="radio" name="paymentMethod" value="Cash on Delivery" checked />
+                    <div class="payment-content">
+                      <strong>💵 Cash on Delivery (COD)</strong>
+                      <span style="display: block; font-size: 0.78rem; color: var(--text-muted);">Pay when your water arrives safely at your door</span>
+                    </div>
+                  </label>
+
+                  <label class="payment-card-label">
+                    <input type="radio" name="paymentMethod" value="UPI (GPay / PhonePe / Paytm)" />
+                    <div class="payment-content">
+                      <strong>📱 UPI (Google Pay / PhonePe / Paytm)</strong>
+                      <span style="display: block; font-size: 0.78rem; color: var(--text-muted);">Pay via UPI QR / Number on confirmation</span>
+                    </div>
+                  </label>
+
+                  <label class="payment-card-label">
+                    <input type="radio" name="paymentMethod" value="Online Payment / Card" />
+                    <div class="payment-content">
+                      <strong>💳 Online Payment / Card</strong>
+                      <span style="display: block; font-size: 0.78rem; color: var(--text-muted);">Direct digital payment link via WhatsApp</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Order Summary Sidebar -->
+            <div class="checkout-sidebar-box">
+              <h4>Order Summary</h4>
+              <div id="checkoutItemsSummary" style="margin-bottom: 16px; max-height: 220px; overflow-y: auto;"></div>
+
+              <div class="cart-cost-row">
+                <span>Subtotal</span>
+                <span id="checkoutSubtotal" style="font-weight: 700;">₹0</span>
+              </div>
+              <div class="cart-cost-row">
+                <span>Delivery Charge</span>
+                <span id="checkoutDelivery" style="font-weight: 700;">₹0</span>
+              </div>
+              <div class="cart-grand-row" style="margin-bottom: 20px;">
+                <span>Grand Total</span>
+                <span id="checkoutGrandTotal">₹0</span>
+              </div>
+
+              <button type="submit" class="btn btn-whatsapp" style="width: 100%; font-size: 1rem; padding: 14px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.18 8.18 0 0 1-5.82 2.41c-1.46 0-2.88-.39-4.14-1.13l-.3-.18-3.11.82.83-3.04-.2-.31a8.183 8.183 0 0 1-1.25-4.4c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+                </svg>
+                <span>Complete Order on WhatsApp</span>
+              </button>
+
+              <span style="display: block; text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 10px;">
+                🔒 WhatsApp order confirmation guarantees rapid dispatch
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       11. ORDER CONFIRMATION MODAL
+       ========================================================================= -->
+  <div class="modal-window" id="orderConfirmationModal">
+    <div class="modal-backdrop-blur" onclick="closeOrderConfirmationModal()"></div>
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-content-body confirmed-content-wrap">
+        <div class="success-check-badge">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+
+        <h2 style="font-family: var(--font-heading); color: var(--primary-deep); margin-bottom: 6px;">Order Confirmed!</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 14px;">
+          Your order has been formatted and forwarded to NBS RAJ WATER WhatsApp desk.
+        </p>
+
+        <div class="order-id-badge">
+          Order ID: <span id="confirmOrderId">NBS00000000</span>
+        </div>
+
+        <!-- Order Summary brief -->
+        <div id="confirmOrderSummary"></div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <button type="button" class="btn btn-outline" onclick="closeOrderConfirmationModal(); scrollToSection('products');">
+            Continue Shopping
+          </button>
+          <button type="button" class="btn btn-primary" onclick="closeOrderConfirmationModal(); openMyOrdersModal();">
+            Track My Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       12. MY ORDERS MODAL WINDOW
+       ========================================================================= -->
+  <div class="modal-window" id="myOrdersModal">
+    <div class="modal-backdrop-blur" onclick="closeMyOrdersModal()"></div>
+    <div class="modal-dialog" style="max-width: 680px;">
+      <div class="modal-head">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <h3>My Orders &amp; Delivery Tracking</h3>
+        </div>
+        <button type="button" class="drawer-close-btn" onclick="closeMyOrdersModal()" aria-label="Close orders">✕</button>
+      </div>
+
+      <div class="modal-content-body">
+        <div id="myOrdersList">
+          <!-- Filled dynamically by js/orders.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       13. BULK ORDER MODAL WINDOW
+       ========================================================================= -->
+  <div class="modal-window" id="bulkOrderModal">
+    <div class="modal-backdrop-blur" onclick="closeBulkOrderModal()"></div>
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-head">
+        <h3>Request Bulk Water Supply</h3>
+        <button type="button" class="drawer-close-btn" onclick="closeBulkOrderModal()" aria-label="Close bulk order">✕</button>
+      </div>
+
+      <div class="modal-content-body">
+        <form id="bulkOrderForm">
+          <div class="form-group">
+            <label class="form-label" for="bulkOrgType">Organization Type *</label>
+            <select id="bulkOrgType" class="form-control" required>
+              <option value="Hotel / Resort">Hotel / Resort</option>
+              <option value="Restaurant / Cafe">Restaurant / Cafe</option>
+              <option value="Corporate Office">Corporate Office</option>
+              <option value="Wedding / Event">Wedding / Catering Event</option>
+              <option value="Hospital / Clinic">Hospital / Healthcare</option>
+              <option value="Educational Institution">Educational Institution</option>
+              <option value="Retail / Supermarket">Retail / Supermarket</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bulkOrgName">Organization / Business Name *</label>
+            <input type="text" id="bulkOrgName" class="form-control" placeholder="e.g. Grand Palace Hotel" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label" for="bulkContactPerson">Contact Person *</label>
+              <input type="text" id="bulkContactPerson" class="form-control" placeholder="Full Name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bulkPhone">Phone Number *</label>
+              <input type="tel" id="bulkPhone" class="form-control" placeholder="10 Digits" maxlength="10" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bulkEstimatedQty">Estimated Quantity / Frequency</label>
+            <input type="text" id="bulkEstimatedQty" class="form-control" placeholder="e.g. 50 Cartons / 20 Jars daily" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bulkRequirements">Specific Requirements &amp; Delivery Location *</label>
+            <textarea id="bulkRequirements" class="form-control" rows="3" placeholder="Tell us about bottle sizes, preferred delivery times, and street location" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-whatsapp" style="width: 100%;">
+            <span>Send Bulk Inquiry to WhatsApp</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       14. FLOATING WHATSAPP BUTTON
+       ========================================================================= -->
+  <a href="javascript:void(0)" class="whatsapp-float-btn" onclick="openDirectWhatsAppChat()" aria-label="Direct WhatsApp Chat" title="Chat on WhatsApp">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.18 8.18 0 0 1-5.82 2.41c-1.46 0-2.88-.39-4.14-1.13l-.3-.18-3.11.82.83-3.04-.2-.31a8.183 8.183 0 0 1-1.25-4.4c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+    </svg>
+  </a>
+
+  <!-- =========================================================================
+       15. TOAST NOTIFICATIONS CONTAINER
+       ========================================================================= -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       16. FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Info -->
+        <div class="footer-col">
+          <img src="assets/logo.svg" alt="NBS RAJ WATER" style="height: 52px; filter: brightness(0) invert(1);" />
+          <p class="footer-brand-p">
+            NBS RAJ WATER is dedicated to providing purest packaged drinking water enriched with balanced natural minerals. Fresh, safe, and reliable doorstep hydration for every Indian home and enterprise.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+            <li><a href="#about" onclick="scrollToSection('about')">About Us</a></li>
+            <li><a href="#products" onclick="scrollToSection('products')">Our Products</a></li>
+            <li><a href="#quality" onclick="scrollToSection('quality')">Why Choose Us</a></li>
+            <li><a href="#howitworks" onclick="scrollToSection('howitworks')">How It Works</a></li>
+            <li><a href="#bulk" onclick="scrollToSection('bulk')">Bulk Supply</a></li>
+          </ul>
+        </div>
+
+        <!-- Products -->
+        <div class="footer-col">
+          <h4>Water Packs</h4>
+          <ul class="footer-links-list">
+            <li><a href="#products" onclick="scrollToSection('products')">250 ML (Pack of 48)</a></li>
+            <li><a href="#products" onclick="scrollToSection('products')">500 ML (Pack 24+1)</a></li>
+            <li><a href="#products" onclick="scrollToSection('products')">1 Litre (Pack 15+1)</a></li>
+            <li><a href="#products" onclick="scrollToSection('products')">2 Litre (Pack 9+1)</a></li>
+            <li><a href="#products" onclick="scrollToSection('products')">20 Litre Dispenser Jar</a></li>
+            <li><a href="#products" onclick="scrollToSection('products')">Commercial Bulk Pack</a></li>
+          </ul>
+        </div>
+
+        <!-- Customer Support & Contact -->
+        <div class="footer-col">
+          <h4>Customer Support</h4>
+          <p style="color: #A0C0D6; font-size: 0.92rem; margin-bottom: 12px;">
+            Immediate assistance on orders, recurring deliveries, and bulk quotes.
+          </p>
+          <p style="color: #fff; font-weight: 700; font-size: 1rem; margin-bottom: 6px;">
+            📞 <a href="tel:+917355415447">+91 73554 15447</a>
+          </p>
+          <p style="color: #fff; font-weight: 700; font-size: 1rem; margin-bottom: 16px;">
+            💬 <a href="javascript:void(0)" onclick="openDirectWhatsAppChat()">Order on WhatsApp</a>
+          </p>
+          <span style="display: block; font-size: 0.82rem; color: #7E9EB4;">
+            Delivery Timings: 7:00 AM - 9:00 PM (Daily)
+          </span>
+        </div>
+      </div>
+
+      <div class="footer-bottom-strip">
+        <p>&copy; 2026 NBS RAJ WATER. All Rights Reserved. Pure Drinking Water Deliveries.</p>
+        <p>Built with Clean HTML5, CSS3, Vanilla JS &amp; Node.js Express</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

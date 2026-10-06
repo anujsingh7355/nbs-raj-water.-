@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 70" width="280" height="70">
+  <defs>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00C49F" />
+      <stop offset="50%" stop-color="#00A8E8" />
+      <stop offset="100%" stop-color="#007EA7" />
+    </linearGradient>
+    <linearGradient id="dropHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <!-- Water Droplet Icon with Crown Ring -->
+  <g transform="translate(10, 8)">
+    <!-- Outer wave ring -->
+    <circle cx="27" cy="27" r="25" fill="#E0F7FA" stroke="#00A8E8" stroke-width="2" opacity="0.6"/>
+    <path d="M12 36 Q 27 44, 42 36 Q 27 50, 12 36 Z" fill="#00A8E8" opacity="0.3" />
+    <!-- Main Water Drop -->
+    <path d="M27 6 C27 6, 12 24, 12 33 C12 41.28 18.72 48 27 48 C35.28 48 42 41.28 42 33 C42 24, 27 6, 27 6 Z" fill="url(#waterGrad)"/>
+    <!-- Inner Sparkle Highlight -->
+    <path d="M22 17 C22 17, 16 26, 16 32 C16 36 18.5 39 22 40 C19.5 37 19 32 21 27 C22 24.5 24 20 22 17 Z" fill="url(#dropHighlight)"/>
+    <circle cx="33" cy="24" r="2.5" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="30" cy="35" r="1.5" fill="#FFFFFF" opacity="0.7" />
+    <!-- Pure leaf emblem on drop -->
+    <path d="M27 28 C29 23, 35 24, 35 27 C35 32, 28 34, 27 34 C26 34, 23 31, 25 29 C26 28, 27 28, 27 28 Z" fill="#FFFFFF" opacity="0.5"/>
+  </g>
+  <!-- Brand Text -->
+  <g transform="translate(72, 16)">
+    <!-- Brand Name -->
+    <text x="0" y="24" font-family="'Poppins', 'Segoe UI', system-ui, sans-serif" font-weight="900" font-size="24" letter-spacing="1" fill="#003459">
+      NBS <tspan fill="#00A8E8">RAJ</tspan>
+    </text>
+    <text x="115" y="24" font-family="'Poppins', 'Segoe UI', system-ui, sans-serif" font-weight="700" font-size="14" letter-spacing="3" fill="#007EA7">
+      WATER
+    </text>
+    <!-- Tagline -->
+    <text x="2" y="39" font-family="'Segoe UI', system-ui, sans-serif" font-weight="600" font-size="9" letter-spacing="2" fill="#5A7184">
+      PURE WATER • TRUSTED QUALITY
+    </text>
+  </g>
+</svg>

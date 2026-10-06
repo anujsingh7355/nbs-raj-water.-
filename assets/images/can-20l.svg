@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <defs>
+    <linearGradient id="can_body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#48CAE4" stop-opacity="0.8" />
+      <stop offset="25%" stop-color="#ADE8F4" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#0096C7" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0077B6" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="can_water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00B4D8" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#0077B6" stop-opacity="0.5" />
+    </linearGradient>
+    <linearGradient id="can_cap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#023E8A" />
+      <stop offset="50%" stop-color="#0077B6" />
+      <stop offset="100%" stop-color="#03045E" />
+    </linearGradient>
+    <filter id="shadowCan" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#003459" flood-opacity="0.22" />
+    </filter>
+  </defs>
+
+  <ellipse cx="160" cy="375" rx="105" ry="18" fill="#003459" opacity="0.18" />
+
+  <g filter="url(#shadowCan)">
+    <!-- Spout / Neck Ring -->
+    <rect x="138" y="28" width="44" height="26" rx="5" fill="url(#can_cap)" stroke="#003459" stroke-width="1.5" />
+    <line x1="138" y1="36" x2="182" y2="36" stroke="#ffffff" stroke-opacity="0.7" stroke-width="2" />
+    <rect x="132" y="52" width="56" height="8" rx="2" fill="#003459" />
+
+    <!-- Main 20L Bubble Top Jar Body -->
+    <path d="M140 60 L140 76 C140 100, 68 115, 68 145 L68 340 C68 360, 85 368, 110 368 L210 368 C235 368, 252 360, 252 340 L252 145 C252 115, 180 100, 180 76 L180 60 Z"
+          fill="url(#can_body)" stroke="#0077B6" stroke-width="2.5" />
+
+    <!-- Water Fill Layer -->
+    <path d="M70 145 L70 340 C70 358, 85 366, 110 366 L210 366 C235 366, 250 358, 250 340 L250 145 Z"
+          fill="url(#can_water)" />
+
+    <!-- Heavy Sturdy Rings (Grooves of 20L Can) -->
+    <ellipse cx="160" cy="170" rx="90" ry="10" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.75" />
+    <ellipse cx="160" cy="172" rx="90" ry="10" fill="none" stroke="#005B82" stroke-width="2" opacity="0.4" />
+
+    <ellipse cx="160" cy="225" rx="91" ry="10" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.75" />
+    <ellipse cx="160" cy="227" rx="91" ry="10" fill="none" stroke="#005B82" stroke-width="2" opacity="0.4" />
+
+    <ellipse cx="160" cy="280" rx="90" ry="10" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.75" />
+    <ellipse cx="160" cy="282" rx="90" ry="10" fill="none" stroke="#005B82" stroke-width="2" opacity="0.4" />
+
+    <!-- Handle Indentations -->
+    <rect x="58" y="210" width="10" height="30" rx="4" fill="#0077B6" opacity="0.4" />
+    <rect x="252" y="210" width="10" height="30" rx="4" fill="#0077B6" opacity="0.4" />
+
+    <!-- Center Brand Emblem / Sticker -->
+    <rect x="100" y="235" width="120" height="85" rx="12" fill="#FFFFFF" opacity="0.95" stroke="#00A8E8" stroke-width="2" />
+    <!-- Water Drop Emblem -->
+    <circle cx="160" cy="256" r="13" fill="#E0F7FA" />
+    <path d="M160 248 C160 248, 154 255, 154 259 C154 262.3, 156.7 265, 160 265 C163.3 265, 166 262.3, 166 259 C166 255, 160 248, 160 248 Z" fill="#00A8E8" />
+    <text x="160" y="280" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="12" fill="#003459" text-anchor="middle" letter-spacing="1">NBS RAJ</text>
+    <text x="160" y="295" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="15" fill="#007EA7" text-anchor="middle" letter-spacing="0.5">20 LITRE</text>
+    <text x="160" y="308" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="7" fill="#5A7184" text-anchor="middle" letter-spacing="1">HOME &amp; OFFICE JAR</text>
+
+    <!-- Glossy Highlights -->
+    <path d="M76 130 C76 130, 84 340, 84 340" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity="0.75" />
+    <path d="M92 140 C92 140, 96 220, 96 220" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.5" />
+  </g>
+
+  <!-- Value Badge Overlay -->
+  <g transform="translate(230, 70)">
+    <circle cx="28" cy="28" r="26" fill="#00C49F" stroke="#ffffff" stroke-width="2.5" />
+    <text x="28" y="23" font-family="'Segoe UI', sans-serif" font-size="7.5" font-weight="800" fill="#ffffff" text-anchor="middle">BEST</text>
+    <text x="28" y="37" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" fill="#ffffff" text-anchor="middle">SELLER</text>
+  </g>
+</svg>

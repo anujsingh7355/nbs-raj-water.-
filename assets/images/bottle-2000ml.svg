@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="p2000_body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#BAE6F7" stop-opacity="0.9" />
+      <stop offset="30%" stop-color="#EFF9FD" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#A5DCF4" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#7EC7E8" stop-opacity="0.92" />
+    </linearGradient>
+    <linearGradient id="p2000_cap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0077B6" />
+      <stop offset="50%" stop-color="#00A8E8" />
+      <stop offset="100%" stop-color="#023E8A" />
+    </linearGradient>
+    <linearGradient id="p2000_label" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#005B82" />
+      <stop offset="50%" stop-color="#0088CC" />
+      <stop offset="100%" stop-color="#002D42" />
+    </linearGradient>
+    <filter id="shadow2000" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#003459" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <ellipse cx="150" cy="376" rx="92" ry="14" fill="#003459" opacity="0.15" />
+
+  <g filter="url(#shadow2000)">
+    <!-- Heavy-Duty Cap -->
+    <rect x="131" y="24" width="38" height="24" rx="4" fill="url(#p2000_cap)" />
+    <line x1="131" y1="31" x2="169" y2="31" stroke="#ffffff" stroke-opacity="0.7" stroke-width="1.5" />
+    <line x1="131" y1="38" x2="169" y2="38" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1" />
+    <rect x="126" y="48" width="48" height="7" rx="2" fill="#004A6B" />
+
+    <!-- 2 Litre Broad Bottle -->
+    <path d="M133 55 L133 82 C133 110, 88 130, 88 155 L88 348 C88 365, 102 372, 122 372 L178 372 C198 372, 212 365, 212 348 L212 155 C212 130, 167 110, 167 82 L167 55 Z"
+          fill="url(#p2000_body)" stroke="#74C0FC" stroke-width="2.2" />
+
+    <!-- Contours & Grip Rings -->
+    <path d="M90 155 Q 150 166, 210 155" stroke="#FFFFFF" stroke-width="3.5" fill="none" opacity="0.8"/>
+    <path d="M89 175 Q 150 186, 211 175" stroke="#74C0FC" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M89 315 Q 150 326, 211 315" stroke="#74C0FC" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M89 335 Q 150 345, 211 335" stroke="#FFFFFF" stroke-width="2.5" fill="none" opacity="0.6"/>
+
+    <!-- Large Label -->
+    <path d="M88 190 C88 190, 150 200, 212 190 L212 290 C212 290, 150 300, 88 290 Z" fill="url(#p2000_label)" />
+    <circle cx="150" cy="225" r="18" fill="#FFFFFF" opacity="0.95" />
+    <path d="M150 212 C150 212, 141 223, 141 228 C141 233, 145 237, 150 237 C155 237, 159 233, 159 228 C159 223, 150 212, 150 212 Z" fill="#00A8E8" />
+
+    <text x="150" y="258" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="14" fill="#FFFFFF" text-anchor="middle" letter-spacing="1.5">NBS RAJ</text>
+    <text x="150" y="275" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="11" fill="#E0F7FA" text-anchor="middle" letter-spacing="1">2 LITRE</text>
+    <text x="150" y="287" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="7.5" fill="#90E0EF" text-anchor="middle" letter-spacing="0.8">FAMILY PACK</text>
+
+    <!-- Reflections -->
+    <path d="M96 100 L96 358" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.65"/>
+    <path d="M106 115 L106 175" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+  </g>
+
+  <!-- Pack Badge Overlay -->
+  <g transform="translate(202, 40)">
+    <circle cx="26" cy="26" r="25" fill="#0077B6" stroke="#ffffff" stroke-width="2" />
+    <text x="26" y="21" font-family="'Segoe UI', sans-serif" font-size="7.5" font-weight="800" fill="#ffffff" text-anchor="middle">PACK OF</text>
+    <text x="26" y="34" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">9+1</text>
+  </g>
+</svg>

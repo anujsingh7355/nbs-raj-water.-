@@ -1,0 +1,29 @@
+[
+  {
+    "orderId": "NBS99887766",
+    "date": "2026-10-06T05:28:59.351Z",
+    "customer": {
+      "name": "Test Customer",
+      "mobile": "9876543210",
+      "address": "Street 12",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "pincode": "302001"
+    },
+    "items": [
+      {
+        "id": "nbs-20l",
+        "name": "NBS RAJ WATER 20 Litre",
+        "quantity": 2,
+        "price": 50
+      }
+    ],
+    "summary": {
+      "subtotal": 100,
+      "deliveryFee": 30,
+      "grandTotal": 130
+    },
+    "paymentMethod": "Cash on Delivery",
+    "status": "Order Placed"
+  }
+]
