@@ -30,7 +30,7 @@ const INITIAL_DEMO_ORDER = {
       packSize: "For Home & Office",
       price: 50,
       quantity: 2,
-      image: "assets/images/can-20l.svg"
+      image: "assets/images/can-20l.png"
     },
     {
       id: "nbs-1000ml",
@@ -38,7 +38,7 @@ const INITIAL_DEMO_ORDER = {
       packSize: "15 + 1 Bottles",
       price: 130,
       quantity: 1,
-      image: "assets/images/bottle-1000ml.svg"
+      image: "assets/images/bottle-1000ml.png"
     }
   ],
   summary: {

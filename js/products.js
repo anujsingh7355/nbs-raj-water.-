@@ -42,7 +42,7 @@ const PRODUCTS = [
     packSize: "15 + 1 Bottles",
     price: 130,
     oldPrice: 140,
-    image: "assets/images/bottle-1000ml.svg",
+    image: "assets/images/bottle-1000ml.png",
     badge: "Customer Favorite",
     description: "Our signature 1-Litre daily hydration pack. Provides pure, balanced taste enriched with vital natural minerals.",
     features: ["15 + 1 Extra Bottle Free", "Essential Electrolytes", "Ergonomic Grip Bottle", "Zero Impurities"]
@@ -68,7 +68,7 @@ const PRODUCTS = [
     packSize: "For Home & Office",
     price: 50,
     oldPrice: 100,
-    image: "assets/images/can-20l.svg",
+    image: "assets/images/can-20l.png",
     badge: "Best Seller (50% OFF)",
     description: "Heavy-duty 20 Litre bubble top dispenser jar. Sanitized multi-stage washed container designed for homes, offices, clinics and stores.",
     features: ["Standard Dispenser Compatible", "Fresh Refill / Exchange", "Multi-stage RO + UV Processed", "Daily Prompt Doorstep Delivery"]

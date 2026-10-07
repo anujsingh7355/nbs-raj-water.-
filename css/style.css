@@ -720,7 +720,9 @@ button {
 
 .product-thumb-img {
   max-height: 210px;
+  max-width: 100%;
   width: auto;
+  object-fit: contain;
   transition: transform 0.35s ease;
 }
 
@@ -1461,6 +1463,12 @@ button {
   justify-content: center;
   padding: 4px;
   flex-shrink: 0;
+}
+
+.cart-item-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .cart-item-info {
