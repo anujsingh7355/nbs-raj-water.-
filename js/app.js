@@ -315,7 +315,7 @@ function setupBulkOrderForm() {
 
     // WhatsApp bulk inquiry message
     const bulkMessage = 
-`*NBS RAJ WATER - BULK ORDER INQUIRY*
+`*NBS AQUAVEDA - BULK ORDER INQUIRY*
 
 *Organization Type:* ${orgType}
 *Organization / Business:* ${orgName}
@@ -374,7 +374,7 @@ function setupContactForm() {
 
     // Prepare WhatsApp message
     const contactMsg = 
-`*NBS RAJ WATER - CUSTOMER INQUIRY*
+`*NBS AQUAVEDA - CUSTOMER INQUIRY*
 
 *Name:* ${name}
 *Phone:* ${phone}
@@ -398,7 +398,7 @@ ${message}`;
 
     window.open(waUrl, "_blank");
     form.reset();
-    showToast("Message sent to NBS RAJ WATER WhatsApp support!", "success");
+    showToast("Message sent to NBS AQUAVEDA WhatsApp support!", "success");
   });
 }
 
@@ -409,7 +409,7 @@ ${message}`;
  */
 function openDirectWhatsAppChat(defaultText) {
   const targetNumber = window.APP_CONFIG?.WHATSAPP_NUMBER || "917355415447";
-  const msg = defaultText || "Hello NBS RAJ WATER, I would like to place an order for pure drinking water.";
+  const msg = defaultText || "Hello NBS AQUAVEDA, I would like to place an order for pure drinking water.";
   window.open(`https://wa.me/${targetNumber}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 window.openDirectWhatsAppChat = openDirectWhatsAppChat;

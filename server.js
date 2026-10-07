@@ -119,7 +119,7 @@ function writeJsonFile(filePath, data) {
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
-    brand: "NBS RAJ WATER",
+    brand: "NBS AQUAVEDA",
     timestamp: new Date().toISOString(),
     database: isMongoConnected ? "MongoDB" : "Local JSON Store"
   });
@@ -128,11 +128,11 @@ app.get("/api/health", (req, res) => {
 // 2. Fetch Products Catalog
 app.get("/api/products", (req, res) => {
   const products = [
-    { id: "nbs-250ml", name: "NBS RAJ WATER 250 ML", packSize: "48 Bottles", price: 200, oldPrice: 250 },
-    { id: "nbs-500ml", name: "NBS RAJ WATER 500 ML", packSize: "24 + 1 Bottles", price: 135, oldPrice: 145 },
-    { id: "nbs-1000ml", name: "NBS RAJ WATER 1 Litre", packSize: "15 + 1 Bottles", price: 130, oldPrice: 140 },
-    { id: "nbs-2000ml", name: "NBS RAJ WATER 2 Litre", packSize: "9 + 1 Bottles", price: 180, oldPrice: 190 },
-    { id: "nbs-20l", name: "NBS RAJ WATER 20 Litre", packSize: "For Home & Office", price: 50, oldPrice: 100 },
+    { id: "nbs-250ml", name: "NBS AQUAVEDA 250 ML", packSize: "48 Bottles", price: 200, oldPrice: 250 },
+    { id: "nbs-500ml", name: "NBS AQUAVEDA 500 ML", packSize: "24 + 1 Bottles", price: 135, oldPrice: 145 },
+    { id: "nbs-1000ml", name: "NBS AQUAVEDA 1 Litre", packSize: "15 + 1 Bottles", price: 130, oldPrice: 140 },
+    { id: "nbs-2000ml", name: "NBS AQUAVEDA 2 Litre", packSize: "9 + 1 Bottles", price: 180, oldPrice: 190 },
+    { id: "nbs-20l", name: "NBS AQUAVEDA 20 Litre", packSize: "For Home & Office", price: 50, oldPrice: 100 },
     { id: "nbs-bulk", name: "Bulk Water Pack", packSize: "Customizable Bulk Pack", price: 50, oldPrice: 75 }
   ];
   res.json({ success: true, products });
@@ -247,7 +247,7 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`
 ===========================================================
-  💧 NBS RAJ WATER - Web Server Running Successfully!
+  💧 NBS AQUAVEDA - Web Server Running Successfully!
 ===========================================================
   • Website URL:     http://localhost:${PORT}
   • REST API:        http://localhost:${PORT}/api/health

@@ -1,7 +1,7 @@
 {
   "name": "nbs-raj-water",
   "version": "1.0.0",
-  "description": "Modern drinking-water delivery website and backend for NBS RAJ WATER",
+  "description": "Modern drinking-water delivery website and backend for NBS AQUAVEDA",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,12 +9,12 @@
   },
   "keywords": [
     "water-delivery",
-    "nbs-raj-water",
+    "nbs-aquaveda",
     "packaged-drinking-water",
     "express",
     "whatsapp-order"
   ],
-  "author": "NBS RAJ WATER",
+  "author": "NBS AQUAVEDA",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

@@ -141,7 +141,7 @@ function buildWhatsAppMessage(order) {
   const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
 
   const message = 
-`*NBS RAJ WATER - NEW ORDER*
+`*NBS AQUAVEDA - NEW ORDER*
 
 *Order ID:* ${order.orderId}
 

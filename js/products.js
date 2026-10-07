@@ -10,7 +10,7 @@
 const PRODUCTS = [
   {
     id: "nbs-250ml",
-    name: "NBS RAJ WATER 250 ML",
+    name: "NBS AQUAVEDA 250 ML",
     shortName: "250 ML Pack",
     category: "bottles",
     packSize: "48 Bottles",
@@ -23,7 +23,7 @@ const PRODUCTS = [
   },
   {
     id: "nbs-500ml",
-    name: "NBS RAJ WATER 500 ML",
+    name: "NBS AQUAVEDA 500 ML",
     shortName: "500 ML Pack",
     category: "bottles",
     packSize: "24 + 1 Bottles",
@@ -36,7 +36,7 @@ const PRODUCTS = [
   },
   {
     id: "nbs-1000ml",
-    name: "NBS RAJ WATER 1 Litre",
+    name: "NBS AQUAVEDA 1 Litre",
     shortName: "1 Litre Pack",
     category: "bottles",
     packSize: "15 + 1 Bottles",
@@ -49,7 +49,7 @@ const PRODUCTS = [
   },
   {
     id: "nbs-2000ml",
-    name: "NBS RAJ WATER 2 Litre",
+    name: "NBS AQUAVEDA 2 Litre",
     shortName: "2 Litre Pack",
     category: "bottles",
     packSize: "9 + 1 Bottles",
@@ -62,7 +62,7 @@ const PRODUCTS = [
   },
   {
     id: "nbs-20l",
-    name: "NBS RAJ WATER 20 Litre",
+    name: "NBS AQUAVEDA 20 Litre",
     shortName: "20 Litre Jar",
     category: "cans",
     packSize: "For Home & Office",

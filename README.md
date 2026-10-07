@@ -1,13 +1,13 @@
-# NBS RAJ WATER - Modern Drinking Water Delivery Platform
+# NBS AQUAVEDA - Modern Drinking Water Delivery Platform
 
-A complete, modern, professional drinking-water delivery website and application for **NBS RAJ WATER**. Inspired by top Indian packaged water brands, designed with clean original visuals, an interactive shopping cart, Indian phone and PIN code validation, WhatsApp click-to-chat order dispatching, order tracking ("My Orders"), and a Node.js + Express backend with optional MongoDB support.
+A complete, modern, professional drinking-water delivery website and application for **NBS AQUAVEDA**. Inspired by top Indian packaged water brands, designed with clean original visuals, an interactive shopping cart, Indian phone and PIN code validation, WhatsApp click-to-chat order dispatching, order tracking ("My Orders"), and a Node.js + Express backend with optional MongoDB support.
 
 ---
 
 ## 🌟 Key Features
 
 1. **Brand Identity**:
-   - Original **NBS RAJ WATER** vector logo and custom illustrations for all bottle sizes.
+   - Original **NBS AQUAVEDA** vector logo and custom illustrations for all bottle sizes.
    - Clean, trustworthy mineral water visual design (marine blue, cyan water, mint accents).
 
 2. **Full Product Lineup**:
@@ -35,7 +35,7 @@ A complete, modern, professional drinking-water delivery website and application
    - Centralized WhatsApp business number in `js/config.js` (`const WHATSAPP_NUMBER = "917355415447"`).
    - Automatically generates the exact formatted order message:
      ```text
-     NBS RAJ WATER - NEW ORDER
+     NBS AQUAVEDA - NEW ORDER
 
      Order ID: NBS12345678
 
@@ -141,7 +141,7 @@ nbs raj/
 ├── README.md                    # Project documentation
 │
 ├── assets/
-│   ├── logo.svg                 # NBS RAJ WATER original vector logo
+│   ├── logo.svg                 # NBS AQUAVEDA original vector logo
 │   └── images/
 │       ├── bottle-250ml.svg     # 250 ML Bottle illustration
 │       ├── bottle-500ml.svg     # 500 ML Bottle illustration

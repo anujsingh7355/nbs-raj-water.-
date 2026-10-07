@@ -18,16 +18,16 @@ const WHATSAPP_NUMBER = "917355415447";
 // 2. BRAND & BUSINESS DETAILS
 // ==========================================
 const BRAND_CONFIG = {
-  name: "NBS RAJ WATER",
+  name: "NBS AQUAVEDA",
   tagline: "Pure Water. Trusted Quality.",
   subheading: "Fresh, safe and reliable drinking water delivered to your doorstep.",
   phone: "+91 73554 15447",
   whatsappDisplay: "+91 73554 15447",
-  email: "orders@nbsrajwater.com",
+  email: "orders@nbsaquaveda.com",
   address: "Plot No. 42, Water Purification Plant, Industrial Area, Sector 5, India",
   operatingHours: "Monday - Sunday: 7:00 AM - 9:00 PM",
   googleMapsUrl: "https://maps.google.com/?q=Packaged+Drinking+Water+Plant",
-  upiId: "nbsrajwater@upi",
+  upiId: "nbsaquaveda@upi",
   supportPhone: "+91 73554 15447"
 };
 

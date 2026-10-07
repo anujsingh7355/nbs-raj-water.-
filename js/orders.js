@@ -26,7 +26,7 @@ const INITIAL_DEMO_ORDER = {
   items: [
     {
       id: "nbs-20l",
-      name: "NBS RAJ WATER 20 Litre",
+      name: "NBS AQUAVEDA 20 Litre",
       packSize: "For Home & Office",
       price: 50,
       quantity: 2,
@@ -34,7 +34,7 @@ const INITIAL_DEMO_ORDER = {
     },
     {
       id: "nbs-1000ml",
-      name: "NBS RAJ WATER 1 Litre",
+      name: "NBS AQUAVEDA 1 Litre",
       packSize: "15 + 1 Bottles",
       price: 130,
       quantity: 1,
@@ -239,7 +239,7 @@ function reOrderItems(orderId) {
 // Help with order via WhatsApp
 function openOrderWhatsAppHelp(orderId) {
   const targetNumber = window.APP_CONFIG?.WHATSAPP_NUMBER || "917355415447";
-  const msg = `Hello NBS RAJ WATER, I need an update / support regarding my Order #${orderId}.`;
+  const msg = `Hello NBS AQUAVEDA, I need an update / support regarding my Order #${orderId}.`;
   window.open(`https://wa.me/${targetNumber}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
