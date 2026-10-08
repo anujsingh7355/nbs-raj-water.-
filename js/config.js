@@ -23,10 +23,10 @@ const BRAND_CONFIG = {
   subheading: "Fresh, safe and reliable drinking water delivered to your doorstep.",
   phone: "+91 73554 15447",
   whatsappDisplay: "+91 73554 15447",
-  email: "orders@nbsaquaveda.com",
-  address: "Plot No. 42, Water Purification Plant, Industrial Area, Sector 5, India",
+  email: "anujs58340@gmail.com",
+  address: "Unchahar, Raebareli, UP, India - 229404",
   operatingHours: "Monday - Sunday: 7:00 AM - 9:00 PM",
-  googleMapsUrl: "https://maps.google.com/?q=Packaged+Drinking+Water+Plant",
+  googleMapsUrl: "https://maps.google.com/?q=Unchahar+Raebareli+UP+India+229404",
   upiId: "nbsaquaveda@upi",
   supportPhone: "+91 73554 15447"
 };
