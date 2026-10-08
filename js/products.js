@@ -16,7 +16,7 @@ const PRODUCTS = [
     packSize: "48 Bottles",
     price: 200,
     oldPrice: 250,
-    image: "assets/images/bottle-250ml.svg",
+    image: "assets/images/bottle-250ml.png",
     badge: "Special Saver",
     description: "Compact 250ml bottles, ideal for meetings, catering, conferences, parties, and everyday quick hydration.",
     features: ["48 Easy-Grip Bottles", "100% Recyclable Food Grade PET", "UV & Ozone Treated", "Hygienically Sealed"]
@@ -29,7 +29,7 @@ const PRODUCTS = [
     packSize: "24 + 1 Bottles",
     price: 135,
     oldPrice: 145,
-    image: "assets/images/bottle-500ml.svg",
+    image: "assets/images/bottle-500ml.png",
     badge: "Extra +1 Free",
     description: "Convenient half-litre bottles. Perfect for personal travel, workouts, sports, and daily on-the-go pure hydration.",
     features: ["24 + 1 Extra Bottle Free", "Crystal Clear Mineral Balance", "BPA Free Packaging", "Tamper Evident Seal"]
@@ -55,7 +55,7 @@ const PRODUCTS = [
     packSize: "9 + 1 Bottles",
     price: 180,
     oldPrice: 190,
-    image: "assets/images/bottle-2000ml.svg",
+    image: "assets/images/bottle-2000ml.png",
     badge: "Family Value",
     description: "Generous 2-Litre bottle bundle suited for road trips, family dining tables, weekend getaways, and daily kitchen use.",
     features: ["9 + 1 Extra Bottle Free", "Heavy Duty PET Body", "Long Lasting Freshness", "Added Magnesium & Potassium"]
@@ -81,7 +81,7 @@ const PRODUCTS = [
     packSize: "Customizable Bulk Pack",
     price: 50,
     oldPrice: 75,
-    image: "assets/images/bulk-pack.svg",
+    image: "assets/images/bulk-pack.png",
     badge: "Commercial / Events",
     description: "Special institutional & bulk water supply pack for weddings, hotels, corporate events, catering agencies, and retail shops.",
     features: ["Tiered Wholesale Rates", "Scheduled Periodic Supply", "Priority Free Transport", "Official GST Invoice Available"]
