@@ -6,6 +6,13 @@
   <title>NBS AQUAVEDA | Pure Water. Trusted Quality. Doorstep Delivery</title>
   <meta name="description" content="Fresh, safe, and reliable packaged drinking water delivered to your doorstep. Order 250ml, 500ml, 1L, 2L bottles, 20L jars, and bulk water packs with fast delivery." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0284c7" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="AQUAVEDA" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/animations.css" />
 </head>
@@ -63,6 +70,15 @@
           <span class="cart-count-badge hidden" id="headerCartCount">0</span>
         </button>
 
+        <!-- Install App Button (PWA) -->
+        <button type="button" class="pwa-install-header-btn hidden" id="headerInstallBtn" onclick="triggerPwaInstall()" title="Install NBS AQUAVEDA App">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span>Install App</span>
+        </button>
+
         <!-- Order Now Button -->
         <button type="button" class="btn btn-primary btn-header-order" onclick="scrollToSection('products')">
           Order Now
@@ -97,6 +113,9 @@
       <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
     </ul>
     <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+      <button type="button" class="btn btn-outline hidden" id="mobileNavInstallBtn" onclick="triggerPwaInstall(); closeMobileMenu();" style="border-color: #0284c7; color: #0284c7;">
+        📲 Install App
+      </button>
       <button type="button" class="btn btn-outline" onclick="openMyOrdersModal(); closeMobileMenu();">
         📄 View My Orders
       </button>
@@ -980,6 +999,21 @@
     </div>
   </footer>
 
+  <!-- Floating PWA Install Banner -->
+  <aside id="pwaInstallBanner" class="pwa-floating-banner hidden" aria-label="Install App">
+    <div class="pwa-banner-content">
+      <img src="assets/icon-192.png" alt="NBS AQUAVEDA App" class="pwa-banner-icon" />
+      <div class="pwa-banner-text">
+        <strong class="pwa-banner-title">NBS AQUAVEDA App</strong>
+        <span class="pwa-banner-desc">Install for fast doorstep drinking water delivery</span>
+      </div>
+    </div>
+    <div class="pwa-banner-actions">
+      <button type="button" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="triggerPwaInstall()">Install</button>
+      <button type="button" class="pwa-banner-dismiss" onclick="dismissPwaBanner()" aria-label="Close install banner">&times;</button>
+    </div>
+  </aside>
+
   <!-- Scripts -->
   <script src="js/config.js"></script>
   <script src="js/products.js"></script>
@@ -987,5 +1021,6 @@
   <script src="js/checkout.js"></script>
   <script src="js/orders.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/pwa.js"></script>
 </body>
 </html>
