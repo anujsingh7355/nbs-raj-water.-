@@ -1,19 +1,20 @@
-const CACHE_NAME = 'nbs-aquaveda-v1';
+const CACHE_NAME = 'nbs-aquaveda-v2';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/css/style.css',
-  '/css/animations.css',
-  '/js/config.js',
-  '/js/products.js',
-  '/js/cart.js',
-  '/js/checkout.js',
-  '/js/orders.js',
-  '/js/app.js',
-  '/assets/logo.svg',
-  '/assets/icon-192.png',
-  '/assets/icon-512.png'
+  './',
+  './index.html',
+  './manifest.json',
+  './css/style.css',
+  './css/animations.css',
+  './js/config.js',
+  './js/products.js',
+  './js/cart.js',
+  './js/checkout.js',
+  './js/orders.js',
+  './js/app.js',
+  './js/pwa.js',
+  './assets/logo.svg',
+  './assets/icon-192.png',
+  './assets/icon-512.png'
 ];
 
 // Install: Cache essential assets
@@ -68,7 +69,7 @@ self.addEventListener('fetch', (event) => {
           if (cachedRes) return cachedRes;
           // If HTML page request failed and no cache, fallback to index.html
           if (req.mode === 'navigate') {
-            return caches.match('/index.html') || caches.match('/');
+            return caches.match('./index.html') || caches.match('/index.html') || caches.match('./') || caches.match('/');
           }
         });
       })

@@ -2193,3 +2193,29 @@ button {
   color: #ffffff;
 }
 
+@media (max-width: 640px) {
+  .icon-action-btn:not(.cart-icon-btn) span {
+    display: none;
+  }
+  .cart-icon-btn > span:not(.cart-count-badge) {
+    display: none;
+  }
+  .pwa-install-header-btn {
+    padding: 7px 11px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(2, 132, 199, 0.08);
+  }
+  .pwa-install-header-btn span {
+    display: inline !important;
+  }
+}
+
+.install-tab-btn {
+  transition: all 0.2s ease;
+}
+
+.install-tab-btn:hover {
+  opacity: 0.85;
+}
+

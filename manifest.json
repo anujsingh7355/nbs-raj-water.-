@@ -1,9 +1,10 @@
 {
+  "id": "/",
   "name": "NBS AQUAVEDA - Pure Water Delivery",
   "short_name": "AQUAVEDA",
   "description": "Fresh, safe, and reliable packaged drinking water delivered right to your doorstep.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0284c7",
@@ -40,14 +41,14 @@
       "name": "Order Water",
       "short_name": "Order",
       "description": "Order water bottles and cans",
-      "url": "/#products",
+      "url": "./#products",
       "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Bulk Orders",
       "short_name": "Bulk",
       "description": "Order water for events and offices",
-      "url": "/#bulk",
+      "url": "./#bulk",
       "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
     }
   ]
