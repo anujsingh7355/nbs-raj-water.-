@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nbs-aquaveda-v2';
+const CACHE_NAME = 'nbs-aquaveda-v3';
 const STATIC_ASSETS = [
   './',
   './index.html',

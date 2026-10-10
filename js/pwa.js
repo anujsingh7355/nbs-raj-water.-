@@ -247,6 +247,9 @@ function openInstallGuideModal() {
             Confirm popup me <strong>"Install / Add"</strong> tap karein. App Home Screen par add ho jayegi!
           </div>
         </div>
+        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; padding: 10px 12px; font-size: 0.8rem; color: #1E40AF; line-height: 1.4;">
+          💡 <strong>Tip:</strong> Agar notification me "Downloading..." aa kar ruk jaye, to Settings ➔ Apps ➔ Chrome ➔ <strong>"Install Unknown Apps"</strong> on karein, ya Chrome menu (⋮) me <strong>"Add to Home screen"</strong> chunein.
+        </div>
       </div>
     </div>
 
