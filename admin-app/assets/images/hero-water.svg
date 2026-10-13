@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 500" width="540" height="500">
+  <defs>
+    <linearGradient id="hero_sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E0F7FA" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#B2EBF2" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#80DEEA" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#00A8E8" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="h_body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C0EAF7" stop-opacity="0.95" />
+      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.98" />
+      <stop offset="70%" stop-color="#ACE1F6" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#84CEEE" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="h_can" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#48CAE4" stop-opacity="0.85" />
+      <stop offset="35%" stop-color="#ADE8F4" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#0096C7" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0077B6" stop-opacity="0.95" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Aura -->
+  <circle cx="270" cy="250" r="210" fill="url(#sunGlow)" />
+
+  <!-- Animated-style Water Ripples on Ground -->
+  <ellipse cx="270" cy="440" rx="230" ry="32" fill="#00A8E8" opacity="0.1" />
+  <ellipse cx="270" cy="440" rx="180" ry="24" fill="#00C49F" opacity="0.12" />
+  <ellipse cx="270" cy="440" rx="120" ry="16" fill="#003459" opacity="0.18" />
+
+  <!-- Water Splash Drops floating in background -->
+  <g opacity="0.85">
+    <!-- Drop 1 -->
+    <path d="M90 280 C90 280, 75 305, 75 318 C75 328, 82 336, 90 336 C98 336, 105 328, 105 318 C105 305, 90 280, 90 280 Z" fill="#00A8E8" opacity="0.75" />
+    <!-- Drop 2 -->
+    <path d="M450 240 C450 240, 438 260, 438 270 C438 278, 444 284, 450 284 C456 284, 462 278, 462 270 C462 260, 450 240, 450 240 Z" fill="#00C49F" opacity="0.75" />
+    <!-- Small bubbles -->
+    <circle cx="110" cy="220" r="7" fill="#80DEEA" opacity="0.7" />
+    <circle cx="125" cy="180" r="4.5" fill="#B2EBF2" opacity="0.8" />
+    <circle cx="430" cy="170" r="8" fill="#80DEEA" opacity="0.7" />
+    <circle cx="410" cy="130" r="5" fill="#B2EBF2" opacity="0.8" />
+  </g>
+
+  <!-- Left: 20L Can in Hero composition -->
+  <g transform="translate(60, 150) scale(0.68)">
+    <rect x="138" y="28" width="44" height="26" rx="5" fill="#023E8A" />
+    <rect x="132" y="52" width="56" height="8" rx="2" fill="#003459" />
+    <path d="M140 60 L140 76 C140 100, 68 115, 68 145 L68 340 C68 360, 85 368, 110 368 L210 368 C235 368, 252 360, 252 340 L252 145 C252 115, 180 100, 180 76 L180 60 Z"
+          fill="url(#h_can)" stroke="#0077B6" stroke-width="2.5" />
+    <ellipse cx="160" cy="170" rx="90" ry="10" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.8" />
+    <ellipse cx="160" cy="235" rx="90" ry="10" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.8" />
+    <ellipse cx="160" cy="300" rx="90" ry="10" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.8" />
+    <rect x="100" y="225" width="120" height="75" rx="10" fill="#FFFFFF" opacity="0.95" />
+    <text x="160" y="258" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="14" fill="#003459" text-anchor="middle">NBS RAJ</text>
+    <text x="160" y="280" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="16" fill="#007EA7" text-anchor="middle">20L CAN</text>
+  </g>
+
+  <!-- Right: 500ml Bottle in Hero composition -->
+  <g transform="translate(320, 170) scale(0.65)">
+    <rect x="135" y="45" width="30" height="20" rx="3" fill="#00C49F" />
+    <path d="M136 71 L136 100 C136 122, 102 140, 102 165 L102 335 C102 352, 114 360, 130 360 L170 360 C186 360, 198 352, 198 335 L198 165 C198 140, 164 122, 164 100 L164 71 Z"
+          fill="url(#h_body)" stroke="#74C0FC" stroke-width="2" />
+    <path d="M102 208 C102 208, 150 214, 198 208 L198 290 C198 290, 150 296, 102 290 Z" fill="#00A8E8" />
+    <text x="150" y="256" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="12" fill="#FFFFFF" text-anchor="middle">NBS RAJ</text>
+    <text x="150" y="274" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="10" fill="#E0F7FA" text-anchor="middle">500 ML</text>
+  </g>
+
+  <!-- Center Foreground: Premium 1 Litre Bottle -->
+  <g transform="translate(145, 40) scale(0.85)">
+    <!-- Cap -->
+    <rect x="133" y="30" width="34" height="22" rx="4" fill="#00A8E8" />
+    <line x1="133" y1="37" x2="167" y2="37" stroke="#ffffff" stroke-width="2" opacity="0.8"/>
+    <rect x="129" y="52" width="42" height="6" rx="2" fill="#005B82" />
+
+    <!-- Bottle Body -->
+    <path d="M135 58 L135 88 C135 115, 96 135, 96 160 L96 350 C96 368, 108 376, 126 376 L174 376 C192 376, 204 368, 204 350 L204 160 C204 135, 165 115, 165 88 L165 58 Z"
+          fill="url(#h_body)" stroke="#00A8E8" stroke-width="2" />
+
+    <!-- Wave ribs -->
+    <path d="M98 165 Q 150 178, 202 165" stroke="#FFFFFF" stroke-width="4" fill="none" opacity="0.8"/>
+    <path d="M97 185 Q 150 196, 203 185" stroke="#74C0FC" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M97 325 Q 150 336, 203 325" stroke="#74C0FC" stroke-width="3" fill="none" opacity="0.6"/>
+
+    <!-- Premium Brand Label -->
+    <path d="M96 200 C96 200, 150 208, 204 200 L204 295 C204 295, 150 303, 96 295 Z" fill="#003459" />
+    <circle cx="150" cy="230" r="17" fill="#FFFFFF" opacity="0.95" />
+    <path d="M150 218 C150 218, 142 228, 142 233 C142 237.4, 145.6 241, 150 241 C154.4 241, 158 237.4, 158 233 C158 228, 150 218, 150 218 Z" fill="#00A8E8" />
+    <path d="M150 228 C152 225, 155 226, 155 228 C155 231, 151 232, 150 232 Z" fill="#00C49F" />
+
+    <text x="150" y="262" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="13" fill="#FFFFFF" text-anchor="middle" letter-spacing="1.5">NBS RAJ</text>
+    <text x="150" y="278" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="10" fill="#00A8E8" text-anchor="middle" letter-spacing="1">1 LITRE</text>
+    <text x="150" y="289" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="7" fill="#90E0EF" text-anchor="middle">NATURAL MINERALS</text>
+
+    <!-- Crystal reflections -->
+    <path d="M104 110 L104 355" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+  </g>
+
+  <!-- Purity Floating Badge -->
+  <g transform="translate(65, 80)">
+    <rect x="0" y="0" width="135" height="48" rx="24" fill="#FFFFFF" filter="drop-shadow(0px 8px 16px rgba(0,52,89,0.14))"/>
+    <circle cx="24" cy="24" r="16" fill="#00C49F" />
+    <path d="M19 24 L23 28 L30 20" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <text x="48" y="20" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="800" fill="#003459">100% PURE</text>
+    <text x="48" y="34" font-family="'Segoe UI', sans-serif" font-size="8.5" font-weight="600" fill="#5A7184">RO + UV + Ozone</text>
+  </g>
+
+  <!-- Doorstep Delivery Floating Badge -->
+  <g transform="translate(330, 95)">
+    <rect x="0" y="0" width="145" height="48" rx="24" fill="#FFFFFF" filter="drop-shadow(0px 8px 16px rgba(0,52,89,0.14))"/>
+    <circle cx="24" cy="24" r="16" fill="#00A8E8" />
+    <!-- Flash lightning icon -->
+    <path d="M25 15 L20 25 L24 25 L23 33 L29 22 L25 22 Z" fill="#FFFFFF" />
+    <text x="48" y="20" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="800" fill="#003459">FAST DELIVERY</text>
+    <text x="48" y="34" font-family="'Segoe UI', sans-serif" font-size="8.5" font-weight="600" fill="#5A7184">Doorstep in Hours</text>
+  </g>
+</svg>

@@ -165,6 +165,7 @@ function renderProducts() {
     `;
   }).join("");
 }
+window.renderProducts = renderProducts;
 
 // Category filter tabs
 function setupCategoryFilters() {
@@ -328,12 +329,29 @@ ${requirements}`;
     const targetNumber = window.APP_CONFIG?.WHATSAPP_NUMBER || "917355415447";
     const waUrl = `https://wa.me/${targetNumber}?text=${encodeURIComponent(bulkMessage)}`;
 
-    // Optional backend sync
+    // Save to localStorage for Admin App + Backend API sync
+    const bulkPayload = {
+      id: "BULK" + Date.now(),
+      timestamp: new Date().toISOString(),
+      status: "New",
+      orgType,
+      orgName,
+      contactPerson,
+      phone,
+      requirements,
+      estimatedQty
+    };
+    try {
+      const existingInquiries = JSON.parse(localStorage.getItem("nbs_aquaveda_inquiries_v1") || "[]");
+      existingInquiries.unshift(bulkPayload);
+      localStorage.setItem("nbs_aquaveda_inquiries_v1", JSON.stringify(existingInquiries));
+    } catch (_) {}
+
     try {
       fetch(`${window.APP_CONFIG.API_CONFIG.baseUrl}/bulk-inquiry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orgType, orgName, contactPerson, phone, requirements, estimatedQty })
+        body: JSON.stringify(bulkPayload)
       }).catch(err => console.log("Backend offline for bulk sync:", err));
     } catch (_) {}
 
@@ -387,12 +405,27 @@ ${message}`;
     const targetNumber = window.APP_CONFIG?.WHATSAPP_NUMBER || "917355415447";
     const waUrl = `https://wa.me/${targetNumber}?text=${encodeURIComponent(contactMsg)}`;
 
-    // Optional backend sync
+    // Save to localStorage for Admin App + Backend API sync
+    const contactPayload = {
+      id: "MSG" + Date.now(),
+      timestamp: new Date().toISOString(),
+      name,
+      email,
+      phone,
+      subject,
+      message
+    };
+    try {
+      const existingContacts = JSON.parse(localStorage.getItem("nbs_aquaveda_contacts_v1") || "[]");
+      existingContacts.unshift(contactPayload);
+      localStorage.setItem("nbs_aquaveda_contacts_v1", JSON.stringify(existingContacts));
+    } catch (_) {}
+
     try {
       fetch(`${window.APP_CONFIG.API_CONFIG.baseUrl}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, subject, message })
+        body: JSON.stringify(contactPayload)
       }).catch(err => console.log("Backend sync offline:", err));
     } catch (_) {}
 

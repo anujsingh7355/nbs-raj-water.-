@@ -1,9 +1,10 @@
 /**
  * =========================================================================
- * NBS RAJ WATER - "MY ORDERS" & TRACKING SYSTEM
+ * NBS AQUAVEDA - "MY ORDERS" & LIVE TRACKING SYSTEM
  * =========================================================================
- * Manages customer order history in localStorage, renders visual progress
- * tracking steppers across all 6 statuses, and provides re-order capability.
+ * Manages customer order history in localStorage + Live Backend API Sync
+ * (/api/orders), renders visual progress tracking steppers across all 6
+ * statuses, supports live Order ID / Mobile lookup, and re-ordering.
  * =========================================================================
  */
 
@@ -17,10 +18,10 @@ const INITIAL_DEMO_ORDER = {
     name: "Rajesh Kumar",
     mobile: "7355415447",
     whatsapp: "7355415447",
-    address: "Flat 402, Lotus Towers, City Center",
-    city: "Jaipur",
-    state: "Rajasthan",
-    pincode: "302001",
+    address: "Main Market Road, Near NTPC Gate, Unchahar",
+    city: "Raebareli",
+    state: "Uttar Pradesh",
+    pincode: "229404",
     instructions: "Please ring bell and leave near door."
   },
   items: [
@@ -46,9 +47,9 @@ const INITIAL_DEMO_ORDER = {
     deliveryFee: 30,
     isFreeDelivery: false,
     grandTotal: 260,
-    savings: 60
+    savings: 110
   },
-  paymentMethod: "UPI",
+  paymentMethod: "UPI (GPay / PhonePe / Paytm)",
   status: "Out for Delivery"
 };
 
@@ -57,11 +58,11 @@ function getStoredOrders() {
   try {
     const raw = localStorage.getItem(ORDERS_STORAGE_KEY);
     if (!raw) {
-      // Seed initial demo order
       localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify([INITIAL_DEMO_ORDER]));
       return [INITIAL_DEMO_ORDER];
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [INITIAL_DEMO_ORDER];
   } catch (err) {
     console.error("Error reading orders:", err);
     return [];
@@ -71,8 +72,12 @@ function getStoredOrders() {
 // Save newly placed order to storage
 function saveOrderToStorage(order) {
   const orders = getStoredOrders();
-  // Prepend newest order to top
-  orders.unshift(order);
+  const existingIdx = orders.findIndex(o => o.orderId === order.orderId);
+  if (existingIdx > -1) {
+    orders[existingIdx] = order;
+  } else {
+    orders.unshift(order);
+  }
   try {
     localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
   } catch (err) {
@@ -80,6 +85,45 @@ function saveOrderToStorage(order) {
   }
 }
 window.saveOrderToStorage = saveOrderToStorage;
+window.getStoredOrders = getStoredOrders;
+window.ORDERS_STORAGE_KEY = ORDERS_STORAGE_KEY;
+
+// Synchronize stored order statuses with live Express backend (/api/orders)
+async function syncOrdersFromBackend(searchFilter = "") {
+  try {
+    const baseUrl = window.APP_CONFIG?.API_CONFIG?.baseUrl || "/api";
+    const res = await fetch(`${baseUrl}/orders`, { cache: "no-store" });
+    if (!res.ok) return;
+
+    const data = await res.json();
+    if (data.success && Array.isArray(data.orders)) {
+      const localOrders = getStoredOrders();
+      const serverOrders = data.orders;
+
+      // Merge server orders with local orders (server status takes priority)
+      const orderMap = new Map();
+      serverOrders.forEach(o => orderMap.set(o.orderId, o));
+      localOrders.forEach(localOrd => {
+        if (orderMap.has(localOrd.orderId)) {
+          // Keep server's updated status
+          const srv = orderMap.get(localOrd.orderId);
+          orderMap.set(localOrd.orderId, { ...localOrd, ...srv, status: srv.status });
+        } else {
+          orderMap.set(localOrd.orderId, localOrd);
+        }
+      });
+
+      const merged = Array.from(orderMap.values()).sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(merged));
+      renderMyOrdersList(searchFilter);
+    }
+  } catch (_) {
+    // Offline or static host mode — localStorage is used directly
+  }
+}
 
 // Status styling badge helpers
 function getStatusBadgeClass(status) {
@@ -135,15 +179,42 @@ function renderTrackingStepper(currentStatus) {
   `;
 }
 
-// Render My Orders List
-function renderMyOrdersList() {
+// Render My Orders List with optional search filter (by Order ID or Mobile)
+function renderMyOrdersList(filterText = "") {
   const container = document.getElementById("myOrdersList");
   if (!container) return;
 
-  const orders = getStoredOrders();
+  const allOrders = getStoredOrders();
+  const query = String(filterText).trim().toLowerCase();
+
+  const orders = query
+    ? allOrders.filter(o =>
+        String(o.orderId).toLowerCase().includes(query) ||
+        String(o.customer?.mobile || "").toLowerCase().includes(query) ||
+        String(o.customer?.name || "").toLowerCase().includes(query)
+      )
+    : allOrders;
+
+  const searchBarHtml = `
+    <div style="display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap;">
+      <input
+        type="text"
+        id="myOrdersSearchInput"
+        class="form-control"
+        placeholder="🔍 Track by Order ID (e.g. NBS...) or Mobile Number..."
+        value="${filterText.replace(/"/g, '&quot;')}"
+        oninput="renderMyOrdersList(this.value)"
+        style="flex: 1; min-width: 220px; padding: 10px 14px; font-size: 0.9rem;"
+      />
+      <button type="button" class="btn btn-outline-sm" onclick="syncOrdersFromBackend(document.getElementById('myOrdersSearchInput')?.value || ''); if(window.showToast) window.showToast('Order status synced!', 'info');" title="Refresh Live Order Status">
+        🔄 Refresh Status
+      </button>
+    </div>
+  `;
 
   if (orders.length === 0) {
     container.innerHTML = `
+      ${searchBarHtml}
       <div class="empty-orders-view">
         <div class="empty-icon-wrap">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00A8E8" stroke-width="1.5">
@@ -152,8 +223,8 @@ function renderMyOrdersList() {
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
         </div>
-        <h3>No Orders Found</h3>
-        <p>You haven't placed any drinking water orders yet.</p>
+        <h3>No Matching Orders Found</h3>
+        <p>${query ? "No order matched your search query." : "You haven't placed any drinking water orders yet."}</p>
         <button type="button" class="btn btn-primary" onclick="closeMyOrdersModal(); scrollToSection('products');">
           Browse Products
         </button>
@@ -162,7 +233,7 @@ function renderMyOrdersList() {
     return;
   }
 
-  container.innerHTML = orders.map(order => {
+  container.innerHTML = searchBarHtml + orders.map(order => {
     const dateFormatted = new Date(order.date).toLocaleDateString("en-IN", {
       day: "numeric",
       month: "short",
@@ -171,13 +242,11 @@ function renderMyOrdersList() {
       minute: "2-digit"
     });
 
-    const totalQty = order.items.reduce((sum, item) => sum + item.quantity, 0);
-
     return `
       <div class="order-card-card">
         <div class="order-card-header">
           <div class="order-id-meta">
-            <span class="order-id-pill">${order.orderId}</span>
+            <span class="order-id-pill">#${order.orderId}</span>
             <span class="order-date-text">${dateFormatted}</span>
           </div>
           <span class="status-badge ${getStatusBadgeClass(order.status)}">${order.status}</span>
@@ -189,9 +258,9 @@ function renderMyOrdersList() {
         </div>
 
         <div class="order-card-items-list">
-          ${order.items.map(item => `
+          ${(order.items || []).map(item => `
             <div class="order-card-item-row">
-              <span class="item-name-qty"><strong>${item.quantity}x</strong> ${item.name} (${item.packSize})</span>
+              <span class="item-name-qty"><strong>${item.quantity}x</strong> ${item.name} (${item.packSize || ""})</span>
               <span class="item-price">₹${item.price * item.quantity}</span>
             </div>
           `).join("")}
@@ -199,8 +268,8 @@ function renderMyOrdersList() {
 
         <div class="order-card-footer">
           <div class="order-meta-info">
-            <span class="payment-badge">Paid via: <strong>${order.paymentMethod}</strong></span>
-            <span class="order-total-sum">Total: <strong>₹${order.summary.grandTotal}</strong></span>
+            <span class="payment-badge">Payment: <strong>${order.paymentMethod}</strong></span>
+            <span class="order-total-sum">Total: <strong>₹${order.summary?.grandTotal || 0}</strong></span>
           </div>
           <div class="order-actions-row">
             <button type="button" class="btn btn-outline-sm" onclick="reOrderItems('${order.orderId}')">
@@ -214,6 +283,15 @@ function renderMyOrdersList() {
       </div>
     `;
   }).join("");
+
+  // Restore focus if searching
+  if (filterText) {
+    const input = document.getElementById("myOrdersSearchInput");
+    if (input) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+  }
 }
 
 // Re-order past items into cart
@@ -246,6 +324,7 @@ function openOrderWhatsAppHelp(orderId) {
 // Modal controls
 function openMyOrdersModal() {
   renderMyOrdersList();
+  syncOrdersFromBackend();
   const modal = document.getElementById("myOrdersModal");
   if (modal) {
     modal.classList.add("open");
@@ -261,7 +340,20 @@ function closeMyOrdersModal() {
   }
 }
 
+// Cross-tab real-time status updates when Admin updates an order
+window.addEventListener("storage", (e) => {
+  if (e.key === ORDERS_STORAGE_KEY) {
+    const modal = document.getElementById("myOrdersModal");
+    if (modal && modal.classList.contains("open")) {
+      const currentSearch = document.getElementById("myOrdersSearchInput")?.value || "";
+      renderMyOrdersList(currentSearch);
+    }
+  }
+});
+
 window.openMyOrdersModal = openMyOrdersModal;
 window.closeMyOrdersModal = closeMyOrdersModal;
 window.reOrderItems = reOrderItems;
 window.openOrderWhatsAppHelp = openOrderWhatsAppHelp;
+window.renderMyOrdersList = renderMyOrdersList;
+window.syncOrdersFromBackend = syncOrdersFromBackend;

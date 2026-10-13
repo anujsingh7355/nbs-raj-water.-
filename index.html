@@ -36,6 +36,7 @@
         <a href="#quality" class="nav-link" onclick="scrollToSection('quality')">Why Us</a>
         <a href="#bulk" class="nav-link" onclick="scrollToSection('bulk')">Bulk Orders</a>
         <a href="#contact" class="nav-link" onclick="scrollToSection('contact')">Contact</a>
+        <a href="admin.html" class="nav-link" style="color: #0284c7; font-weight: 800;">🔐 Admin</a>
       </nav>
 
       <!-- Header Actions: Search, My Orders, Cart, Order Now CTA -->
@@ -79,6 +80,11 @@
           <span>Install App</span>
         </button>
 
+        <!-- Direct Admin App Button -->
+        <a href="admin.html" class="icon-action-btn" style="background: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 8px 13px; border-radius: 99px; font-weight: 700; text-decoration: none;" title="Open NBS AQUAVEDA Admin & Delivery App">
+          <span>🔐 Admin App</span>
+        </a>
+
         <!-- Order Now Button -->
         <button type="button" class="btn btn-primary btn-header-order" onclick="scrollToSection('products')">
           Order Now
@@ -119,6 +125,9 @@
       <button type="button" class="btn btn-outline" onclick="openMyOrdersModal(); closeMobileMenu();">
         📄 View My Orders
       </button>
+      <a href="admin.html" class="btn btn-outline" style="justify-content: center; border-color: #334155; color: #0f172a;">
+        🔐 Admin App (Backend)
+      </a>
       <button type="button" class="btn btn-whatsapp" onclick="openDirectWhatsAppChat(); closeMobileMenu();">
         💬 WhatsApp Direct
       </button>
@@ -167,6 +176,10 @@
               </svg>
               <span>Order on WhatsApp</span>
             </button>
+
+            <a href="admin.html" class="btn" style="background: #0f172a; color: #38bdf8; border: 2px solid #38bdf8; font-weight: 800; gap: 8px; text-decoration: none;">
+              <span>🔐 Admin App (Backend)</span>
+            </a>
           </div>
 
           <!-- Trust Strip -->
@@ -721,15 +734,15 @@
               <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 12px;">
                 <div class="form-group">
                   <label class="form-label" for="custCity">City *</label>
-                  <input type="text" id="custCity" class="form-control" placeholder="City" value="Jaipur" required />
+                  <input type="text" id="custCity" class="form-control" placeholder="City" value="Unchahar, Raebareli" required />
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="custState">State *</label>
-                  <input type="text" id="custState" class="form-control" placeholder="State" value="Rajasthan" required />
+                  <input type="text" id="custState" class="form-control" placeholder="State" value="Uttar Pradesh" required />
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="custPincode">Pincode (6 Digits) *</label>
-                  <input type="text" id="custPincode" class="form-control" placeholder="302001" maxlength="6" required />
+                  <input type="text" id="custPincode" class="form-control" placeholder="229404" value="229404" maxlength="6" required />
                 </div>
               </div>
 
@@ -930,8 +943,12 @@
   </div>
 
   <!-- =========================================================================
-       14. FLOATING WHATSAPP BUTTON
+       14. FLOATING WHATSAPP & ADMIN APP BUTTONS
        ========================================================================= -->
+  <a href="admin.html" title="Open NBS AQUAVEDA Admin &amp; Delivery App" style="position: fixed; bottom: 24px; left: 24px; z-index: 950; background: #0f172a; color: #38bdf8; border: 2px solid #38bdf8; padding: 12px 18px; border-radius: 999px; font-weight: 800; font-size: 0.9rem; text-decoration: none; box-shadow: 0 8px 25px rgba(15, 23, 42, 0.35); display: inline-flex; align-items: center; gap: 8px;">
+    <span>🔐 Admin App</span>
+  </a>
+
   <a href="javascript:void(0)" class="whatsapp-float-btn" onclick="openDirectWhatsAppChat()" aria-label="Direct WhatsApp Chat" title="Chat on WhatsApp">
     <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.18 8.18 0 0 1-5.82 2.41c-1.46 0-2.88-.39-4.14-1.13l-.3-.18-3.11.82.83-3.04-.2-.31a8.183 8.183 0 0 1-1.25-4.4c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
@@ -967,6 +984,7 @@
             <li><a href="#quality" onclick="scrollToSection('quality')">Why Choose Us</a></li>
             <li><a href="#howitworks" onclick="scrollToSection('howitworks')">How It Works</a></li>
             <li><a href="#bulk" onclick="scrollToSection('bulk')">Bulk Supply</a></li>
+            <li><a href="admin.html" style="color: #38bdf8; font-weight: 600;">🔐 Admin App (Backend)</a></li>
           </ul>
         </div>
 
@@ -1003,7 +1021,7 @@
 
       <div class="footer-bottom-strip">
         <p>&copy; 2026 NBS AQUAVEDA. All Rights Reserved. Pure Drinking Water Deliveries.</p>
-        <p>Website Developer: <strong>Anuj Singh</strong></p>
+        <p>Website Developer: <strong>Anuj Singh</strong> &nbsp;|&nbsp; <a href="admin.html" style="color: #38bdf8; text-decoration: none; font-weight: 600;">🔐 Open Admin App</a></p>
       </div>
     </div>
   </footer>

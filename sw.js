@@ -1,7 +1,8 @@
-const CACHE_NAME = 'nbs-aquaveda-v3';
+const CACHE_NAME = 'nbs-aquaveda-v5';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './admin.html',
   './manifest.json',
   './css/style.css',
   './css/animations.css',
@@ -11,6 +12,7 @@ const STATIC_ASSETS = [
   './js/checkout.js',
   './js/orders.js',
   './js/app.js',
+  './js/admin.js',
   './js/pwa.js',
   './assets/logo.svg',
   './assets/icon-192.png',
@@ -49,8 +51,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
 
-  // Only handle GET requests and http/https scheme
-  if (req.method !== 'GET' || !req.url.startsWith('http')) return;
+  // Only handle GET requests and http/https scheme; skip /api/ routes
+  if (req.method !== 'GET' || !req.url.startsWith('http') || req.url.includes('/api/')) return;
 
   event.respondWith(
     fetch(req)

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="p250_body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#CAEEF9" stop-opacity="0.9" />
+      <stop offset="30%" stop-color="#EAF8FD" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#BAE6F7" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#9ADBF3" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="p250_cap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0088CC" />
+      <stop offset="50%" stop-color="#00B4D8" />
+      <stop offset="100%" stop-color="#0077B6" />
+    </linearGradient>
+    <linearGradient id="p250_label" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#007EA7" />
+      <stop offset="50%" stop-color="#00A8E8" />
+      <stop offset="100%" stop-color="#003459" />
+    </linearGradient>
+    <filter id="shadow250" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#003459" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="150" cy="365" rx="75" ry="14" fill="#003459" opacity="0.12" filter="blur(5px)" />
+
+  <!-- Bottle Group -->
+  <g filter="url(#shadow250)">
+    <!-- Cap -->
+    <rect x="134" y="65" width="32" height="22" rx="4" fill="url(#p250_cap)" />
+    <line x1="134" y1="72" x2="166" y2="72" stroke="#ffffff" stroke-opacity="0.5" stroke-width="1.5" />
+    <line x1="134" y1="78" x2="166" y2="78" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1" />
+    <rect x="131" y="87" width="38" height="6" rx="2" fill="#0077B6" />
+
+    <!-- Neck -->
+    <path d="M136 93 L136 120 C136 140, 105 155, 105 180 L105 320 C105 338, 115 348, 130 350 L170 350 C185 348, 195 338, 195 320 L195 180 C195 155, 164 140, 164 120 L164 93 Z"
+          fill="url(#p250_body)" stroke="#74C0FC" stroke-width="2" />
+
+    <!-- Bottle Ribs / Contours -->
+    <path d="M107 195 Q 150 205, 193 195" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.7"/>
+    <path d="M106 215 Q 150 225, 194 215" stroke="#74C0FC" stroke-width="2" fill="none" opacity="0.5"/>
+
+    <!-- Label -->
+    <path d="M105 230 C105 230, 150 236, 195 230 L195 300 C195 300, 150 306, 105 300 Z" fill="url(#p250_label)" />
+    <!-- Label Detail -->
+    <circle cx="150" cy="254" r="14" fill="#FFFFFF" opacity="0.95" />
+    <!-- Mini Drop in Label -->
+    <path d="M150 244 C150 244, 144 252, 144 256 C144 259.3, 146.7 262, 150 262 C153.3 262, 156 259.3, 156 256 C156 252, 150 244, 150 244 Z" fill="#00A8E8" />
+    <text x="150" y="278" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="10" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">NBS RAJ</text>
+    <text x="150" y="291" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="8" fill="#E0F7FA" text-anchor="middle" letter-spacing="1">250 ML</text>
+
+    <!-- Highlights -->
+    <path d="M112 185 L112 330" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+    <path d="M118 190 L118 220" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  </g>
+
+  <!-- Purity Badge Overlay -->
+  <g transform="translate(195, 80)">
+    <circle cx="25" cy="25" r="24" fill="#00C49F" stroke="#ffffff" stroke-width="2" />
+    <text x="25" y="22" font-family="'Segoe UI', sans-serif" font-size="8" font-weight="800" fill="#ffffff" text-anchor="middle">PACK OF</text>
+    <text x="25" y="34" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" fill="#ffffff" text-anchor="middle">48</text>
+  </g>
+</svg>

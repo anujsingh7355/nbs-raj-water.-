@@ -35,6 +35,7 @@ if ('serviceWorker' in navigator && isSecureOrigin) {
       .register('./sw.js')
       .then((reg) => {
         console.log('✅ NBS AQUAVEDA ServiceWorker registered:', reg.scope);
+        reg.update().catch(() => {});
       })
       .catch((err) => {
         console.warn('⚠️ NBS AQUAVEDA ServiceWorker registration failed:', err);
