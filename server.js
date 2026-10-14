@@ -453,7 +453,7 @@ app.post("/api/orders", async (req, res) => {
       fetch("https://ntfy.sh/nbs_aquaveda_live_orders_7355415447", {
         method: "POST",
         headers: {
-          "Title": `💧 New Water Order: #${orderData.orderId} (₹${orderData.summary?.grandTotal || 0})`,
+          "Title": `New Water Order: #${orderData.orderId} (Rs ${orderData.summary?.grandTotal || 0})`,
           "Priority": "high",
           "Tags": "droplet,package"
         },
@@ -616,7 +616,7 @@ app.post("/api/bulk-inquiry", (req, res) => {
       fetch("https://ntfy.sh/nbs_aquaveda_inquiries_7355415447", {
         method: "POST",
         headers: {
-          "Title": `🏢 Bulk Water Inquiry: ${inquiry.orgName || inquiry.contactPerson}`,
+          "Title": `Bulk Water Inquiry: ${inquiry.orgName || inquiry.contactPerson || "Client"}`,
           "Priority": "default",
           "Tags": "building,briefcase"
         },
@@ -661,7 +661,7 @@ app.post("/api/contact", (req, res) => {
       fetch("https://ntfy.sh/nbs_aquaveda_contacts_7355415447", {
         method: "POST",
         headers: {
-          "Title": `✉️ Customer Message: ${contact.name}`,
+          "Title": `Customer Message: ${contact.name || "Customer"}`,
           "Priority": "default",
           "Tags": "envelope,speech_balloon"
         },

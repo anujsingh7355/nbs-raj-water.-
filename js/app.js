@@ -352,7 +352,7 @@ ${requirements}`;
       fetch("https://ntfy.sh/nbs_aquaveda_inquiries_7355415447", {
         method: "POST",
         headers: {
-          "Title": `🏢 Bulk Water Inquiry: ${orgName || contactPerson}`,
+          "Title": `Bulk Water Inquiry: ${orgName || contactPerson || "Client"}`,
           "Priority": "default",
           "Tags": "building,briefcase"
         },
@@ -440,7 +440,7 @@ ${message}`;
       fetch("https://ntfy.sh/nbs_aquaveda_contacts_7355415447", {
         method: "POST",
         headers: {
-          "Title": `✉️ Customer Message: ${name}`,
+          "Title": `Customer Message: ${name || "Customer"}`,
           "Priority": "default",
           "Tags": "envelope,speech_balloon"
         },

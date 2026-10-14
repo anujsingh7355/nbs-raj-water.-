@@ -286,7 +286,7 @@ async function processCheckout(event) {
     fetch(CLOUD_ORDERS_URL, {
       method: "POST",
       headers: {
-        "Title": `💧 New Water Order: #${orderId} (₹${orderData.summary.grandTotal})`,
+        "Title": `New Water Order: #${orderId} (Rs ${orderData.summary.grandTotal})`,
         "Priority": "high",
         "Tags": "droplet,package,bell"
       },

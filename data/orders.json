@@ -1,1 +1,98 @@
-[]
+[
+  {
+    "orderId": "NBS11223344",
+    "paymentMethod": "Cash on Delivery",
+    "customer": {
+      "address": "NTPC Colony, Unchahar",
+      "state": "Uttar Pradesh",
+      "name": "Pooja Singh",
+      "whatsapp": "7355415447",
+      "city": "Unchahar",
+      "pincode": "229404",
+      "instructions": "Leave with guard",
+      "mobile": "7355415447"
+    },
+    "date": "2026-10-14T20:12:58.1281686+05:30",
+    "items": [
+      {
+        "price": 50,
+        "quantity": 3,
+        "name": "NBS AQUAVEDA 20 Litre",
+        "id": "nbs-20l",
+        "packSize": "For Home & Office"
+      }
+    ],
+    "summary": {
+      "subtotal": 150,
+      "isFreeDelivery": false,
+      "deliveryFee": 30,
+      "grandTotal": 180,
+      "savings": 150
+    },
+    "status": "Order Placed"
+  },
+  {
+    "orderId": "NBS55443322",
+    "paymentMethod": "Cash on Delivery",
+    "customer": {
+      "address": "Station Road, Unchahar",
+      "state": "Uttar Pradesh",
+      "name": "Kavita Devi",
+      "whatsapp": "7355415447",
+      "city": "Unchahar",
+      "pincode": "229404",
+      "instructions": "Urgent delivery",
+      "mobile": "7355415447"
+    },
+    "date": "2026-10-14T20:08:43.6523211+05:30",
+    "items": [
+      {
+        "price": 130,
+        "quantity": 2,
+        "name": "NBS AQUAVEDA 1 Litre",
+        "id": "nbs-1000ml",
+        "packSize": "15 + 1 Bottles"
+      }
+    ],
+    "summary": {
+      "subtotal": 260,
+      "isFreeDelivery": false,
+      "deliveryFee": 30,
+      "grandTotal": 290,
+      "savings": 20
+    },
+    "status": "Order Placed"
+  },
+  {
+    "orderId": "NBS88776655",
+    "paymentMethod": "Cash on Delivery",
+    "customer": {
+      "address": "Civil Lines, Unchahar",
+      "state": "Uttar Pradesh",
+      "name": "Vikram Sharma",
+      "whatsapp": "7355415447",
+      "city": "Unchahar",
+      "pincode": "229404",
+      "instructions": "Call on arrival",
+      "mobile": "7355415447"
+    },
+    "date": "2026-10-14T20:07:59.5378447+05:30",
+    "items": [
+      {
+        "price": 50,
+        "quantity": 4,
+        "name": "NBS AQUAVEDA 20 Litre",
+        "id": "nbs-20l",
+        "packSize": "For Home & Office"
+      }
+    ],
+    "summary": {
+      "subtotal": 200,
+      "isFreeDelivery": false,
+      "deliveryFee": 30,
+      "grandTotal": 230,
+      "savings": 200
+    },
+    "status": "Order Placed"
+  }
+]

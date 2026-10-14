@@ -983,7 +983,7 @@ async function handleImportWhatsAppOrder(e) {
     fetch(ORDERS_CLOUD_TOPIC, {
       method: "POST",
       headers: {
-        "Title": `💧 Imported Order: #${orderId} (₹${grandTotal})`,
+        "Title": `Imported Order: #${orderId} (Rs ${grandTotal})`,
         "Priority": "high",
         "Tags": "droplet,package"
       },
@@ -1080,7 +1080,7 @@ async function handleCreateManualOrder(e) {
     fetch(ORDERS_CLOUD_TOPIC, {
       method: "POST",
       headers: {
-        "Title": `💧 New Admin Order: #${newOrder.orderId} (₹${grandTotal})`,
+        "Title": `New Admin Order: #${newOrder.orderId} (Rs ${grandTotal})`,
         "Priority": "high",
         "Tags": "droplet,package"
       },
