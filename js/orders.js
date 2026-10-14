@@ -88,40 +88,68 @@ window.saveOrderToStorage = saveOrderToStorage;
 window.getStoredOrders = getStoredOrders;
 window.ORDERS_STORAGE_KEY = ORDERS_STORAGE_KEY;
 
-// Synchronize stored order statuses with live Express backend (/api/orders)
+// Synchronize stored order statuses with Cloud Topic & Express backend
 async function syncOrdersFromBackend(searchFilter = "") {
+  let cloudOrders = [];
+  try {
+    const cloudRes = await fetch("https://ntfy.sh/nbs_aquaveda_live_orders_7355415447/json?poll=1&since=all", { cache: "no-store" });
+    if (cloudRes.ok) {
+      const text = await cloudRes.text();
+      const lines = text.split("\n");
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const entry = JSON.parse(line);
+          if (entry.event === "message" && entry.message) {
+            let parsed = null;
+            try { 
+              parsed = JSON.parse(entry.message); 
+            } catch (_) {
+              try {
+                const fixed = entry.message.replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":');
+                parsed = JSON.parse(fixed);
+              } catch (_) {}
+            }
+            if (parsed && parsed.orderId) cloudOrders.push(parsed);
+          }
+        } catch (_) {}
+      }
+    }
+  } catch (_) {}
+
+  let serverOrders = [];
   try {
     const baseUrl = window.APP_CONFIG?.API_CONFIG?.baseUrl || "/api";
     const res = await fetch(`${baseUrl}/orders`, { cache: "no-store" });
-    if (!res.ok) return;
-
-    const data = await res.json();
-    if (data.success && Array.isArray(data.orders)) {
-      const localOrders = getStoredOrders();
-      const serverOrders = data.orders;
-
-      // Merge server orders with local orders (server status takes priority)
-      const orderMap = new Map();
-      serverOrders.forEach(o => orderMap.set(o.orderId, o));
-      localOrders.forEach(localOrd => {
-        if (orderMap.has(localOrd.orderId)) {
-          // Keep server's updated status
-          const srv = orderMap.get(localOrd.orderId);
-          orderMap.set(localOrd.orderId, { ...localOrd, ...srv, status: srv.status });
-        } else {
-          orderMap.set(localOrd.orderId, localOrd);
-        }
-      });
-
-      const merged = Array.from(orderMap.values()).sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
-
-      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(merged));
-      renderMyOrdersList(searchFilter);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && Array.isArray(data.orders)) {
+        serverOrders = data.orders;
+      }
     }
-  } catch (_) {
-    // Offline or static host mode — localStorage is used directly
+  } catch (_) {}
+
+  if (cloudOrders.length > 0 || serverOrders.length > 0) {
+    const localOrders = getStoredOrders();
+    const orderMap = new Map();
+    localOrders.forEach(loc => orderMap.set(loc.orderId, loc));
+    cloudOrders.forEach(co => {
+      if (orderMap.has(co.orderId)) {
+        orderMap.set(co.orderId, { ...orderMap.get(co.orderId), ...co, status: co.status });
+      }
+    });
+    serverOrders.forEach(srv => {
+      if (orderMap.has(srv.orderId)) {
+        orderMap.set(srv.orderId, { ...orderMap.get(srv.orderId), ...srv, status: srv.status });
+      }
+    });
+    const merged = Array.from(orderMap.values()).sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    try {
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(merged));
+    } catch (_) {}
+    renderMyOrdersList(searchFilter);
   }
 }
 
@@ -350,6 +378,21 @@ window.addEventListener("storage", (e) => {
     }
   }
 });
+
+if (typeof BroadcastChannel !== "undefined") {
+  try {
+    const bc = new BroadcastChannel("nbs_aquaveda_orders_channel");
+    bc.onmessage = (e) => {
+      if (e.data && (e.data.type === "ORDER_STATUS_UPDATE" || e.data.type === "NEW_ORDER")) {
+        const modal = document.getElementById("myOrdersModal");
+        if (modal && modal.classList.contains("open")) {
+          const currentSearch = document.getElementById("myOrdersSearchInput")?.value || "";
+          renderMyOrdersList(currentSearch);
+        }
+      }
+    };
+  } catch (_) {}
+}
 
 window.openMyOrdersModal = openMyOrdersModal;
 window.closeMyOrdersModal = closeMyOrdersModal;

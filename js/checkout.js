@@ -280,7 +280,33 @@ async function processCheckout(event) {
   // 1. Save to LocalStorage for "My Orders"
   window.saveOrderToStorage(orderData);
 
-  // 2. Synchronize with backend API if available
+  // 2. Realtime Cloud Broadcast to Admin App (Works on Netlify, Mobile, Localhost & Cloud)
+  const CLOUD_ORDERS_URL = "https://ntfy.sh/nbs_aquaveda_live_orders_7355415447";
+  try {
+    fetch(CLOUD_ORDERS_URL, {
+      method: "POST",
+      headers: {
+        "Title": `💧 New Water Order: #${orderId} (₹${orderData.summary.grandTotal})`,
+        "Priority": "high",
+        "Tags": "droplet,package,bell"
+      },
+      body: JSON.stringify(orderData),
+      keepalive: true
+    }).catch(e => console.log("Cloud sync note:", e));
+  } catch (err) {
+    console.log("Cloud sync error:", err);
+  }
+
+  // 3. Cross-Tab Instant BroadcastChannel (0ms sync if Admin is open in same browser)
+  try {
+    if (typeof BroadcastChannel !== "undefined") {
+      const bc = new BroadcastChannel("nbs_aquaveda_orders_channel");
+      bc.postMessage({ type: "NEW_ORDER", order: orderData });
+      bc.close();
+    }
+  } catch (_) {}
+
+  // 4. Synchronize with local backend API if available
   try {
     if (window.APP_CONFIG?.API_CONFIG?.enableBackendSync) {
       fetch(`${window.APP_CONFIG.API_CONFIG.baseUrl}/orders`, {

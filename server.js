@@ -447,6 +447,20 @@ app.post("/api/orders", async (req, res) => {
     }
 
     console.log(`📦 New Order Received: #${orderData.orderId} | Customer: ${orderData.customer.name} | Total: ₹${orderData.summary?.grandTotal}`);
+
+    // Broadcast to Cloud Realtime Topic
+    try {
+      fetch("https://ntfy.sh/nbs_aquaveda_live_orders_7355415447", {
+        method: "POST",
+        headers: {
+          "Title": `💧 New Water Order: #${orderData.orderId} (₹${orderData.summary?.grandTotal || 0})`,
+          "Priority": "high",
+          "Tags": "droplet,package"
+        },
+        body: JSON.stringify(orderData)
+      }).catch(() => {});
+    } catch (_) {}
+
     res.status(201).json({ success: true, message: "Order stored successfully", orderId: orderData.orderId, order: orderData });
   } catch (err) {
     console.error("Order save error:", err);
@@ -538,6 +552,19 @@ app.patch("/api/orders/:id/status", async (req, res) => {
       writeJsonFile(ORDERS_FILE, orders);
 
       console.log(`🔄 Order #${targetId} status updated to: ${status}`);
+
+      // Broadcast status update to Cloud Realtime Topic
+      try {
+        fetch("https://ntfy.sh/nbs_aquaveda_live_orders_7355415447", {
+          method: "POST",
+          headers: {
+            "Title": `Order #${targetId}: ${status}`,
+            "Tags": "package,truck"
+          },
+          body: JSON.stringify(orders[idx])
+        }).catch(() => {});
+      } catch (_) {}
+
       return res.json({ success: true, order: orders[idx] });
     }
   } catch (err) {
@@ -583,6 +610,20 @@ app.post("/api/bulk-inquiry", (req, res) => {
     writeJsonFile(INQUIRIES_FILE, inquiries);
 
     console.log(`💼 Bulk Inquiry Received: ${inquiry.orgName} (${inquiry.contactPerson})`);
+
+    // Broadcast to Cloud Realtime Topic
+    try {
+      fetch("https://ntfy.sh/nbs_aquaveda_inquiries_7355415447", {
+        method: "POST",
+        headers: {
+          "Title": `🏢 Bulk Water Inquiry: ${inquiry.orgName || inquiry.contactPerson}`,
+          "Priority": "default",
+          "Tags": "building,briefcase"
+        },
+        body: JSON.stringify(inquiry)
+      }).catch(() => {});
+    } catch (_) {}
+
     res.status(201).json({ success: true, message: "Bulk inquiry recorded", id: inquiry.id, inquiry });
   } catch (err) {
     res.status(500).json({ success: false, message: "Error saving bulk inquiry" });
@@ -614,6 +655,20 @@ app.post("/api/contact", (req, res) => {
     writeJsonFile(CONTACTS_FILE, contacts);
 
     console.log(`✉️ Contact Message from: ${contact.name} (${contact.phone})`);
+
+    // Broadcast to Cloud Realtime Topic
+    try {
+      fetch("https://ntfy.sh/nbs_aquaveda_contacts_7355415447", {
+        method: "POST",
+        headers: {
+          "Title": `✉️ Customer Message: ${contact.name}`,
+          "Priority": "default",
+          "Tags": "envelope,speech_balloon"
+        },
+        body: JSON.stringify(contact)
+      }).catch(() => {});
+    } catch (_) {}
+
     res.status(201).json({ success: true, message: "Contact message saved", id: contact.id, contact });
   } catch (err) {
     res.status(500).json({ success: false, message: "Error saving contact message" });

@@ -12,6 +12,12 @@
 const ADMIN_LOCK_KEY = "nbs_aquaveda_admin_locked_v1";
 const INQUIRIES_KEY = "nbs_aquaveda_inquiries_v1";
 const CONTACTS_KEY = "nbs_aquaveda_contacts_v1";
+const DELETED_ORDERS_KEY = "nbs_aquaveda_deleted_orders_v1";
+
+// Cloud Realtime Sync Topics (Works globally across Netlify, Mobile, Localhost & Cloud)
+const ORDERS_CLOUD_TOPIC = "https://ntfy.sh/nbs_aquaveda_live_orders_7355415447";
+const INQUIRIES_CLOUD_TOPIC = "https://ntfy.sh/nbs_aquaveda_inquiries_7355415447";
+const CONTACTS_CLOUD_TOPIC = "https://ntfy.sh/nbs_aquaveda_contacts_7355415447";
 
 let adminOrders = [];
 let adminProducts = [];
@@ -21,6 +27,63 @@ let currentOrderStatusFilter = "all";
 let isBackendOnline = false;
 
 const API_BASE = window.APP_CONFIG?.API_CONFIG?.baseUrl || "/api";
+
+function getDeletedOrderIds() {
+  try {
+    const raw = localStorage.getItem(DELETED_ORDERS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function safeParseJson(raw) {
+  if (!raw) return null;
+  if (typeof raw === "object") return raw;
+  try {
+    return JSON.parse(raw);
+  } catch (_) {
+    try {
+      const fixed = raw.replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":');
+      return JSON.parse(fixed);
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+function playOrderAlertChime() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = "sine";
+    osc1.frequency.setValueAtTime(659.25, now);
+    gain1.gain.setValueAtTime(0.18, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.35);
+
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = "sine";
+    osc2.frequency.setValueAtTime(987.77, now + 0.15);
+    gain2.gain.setValueAtTime(0.22, now + 0.15);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.start(now + 0.15);
+    osc2.stop(now + 0.6);
+  } catch (e) {
+    console.log("Audio chime note:", e);
+  }
+}
 
 function showAdminToast(msg) {
   const el = document.getElementById("adminToast");
@@ -114,7 +177,8 @@ window.switchAdminTab = switchAdminTab;
  * 3. DATA LOADING & SYNC
  * =========================================================================
  */
-async function refreshAllAdminData() {
+async function refreshAllAdminData(isManual = false) {
+  if (isManual) showAdminToast("🔄 Syncing latest orders from Cloud & Server...");
   await Promise.all([
     loadAdminOrders(),
     loadAdminProducts(),
@@ -122,8 +186,9 @@ async function refreshAllAdminData() {
     loadAdminContacts()
   ]);
   updateKpiStats();
+  if (isManual) showAdminToast(`✅ Sync Complete: ${adminOrders.length} Order(s) Active`);
 }
-window.refreshAllAdminData = refreshAllAdminData;
+window.refreshAllAdminData = () => refreshAllAdminData(true);
 
 function setConnectionStatus(online) {
   isBackendOnline = online;
@@ -132,20 +197,98 @@ function setConnectionStatus(online) {
   if (!textEl || !badgeEl) return;
 
   if (online) {
-    textEl.textContent = "Live Server Sync";
+    textEl.textContent = "Live Cloud Sync";
     badgeEl.style.background = "rgba(16, 185, 129, 0.18)";
     badgeEl.style.color = "#34d399";
   } else {
-    textEl.textContent = "App Active";
-    badgeEl.style.background = "rgba(16, 185, 129, 0.18)";
-    badgeEl.style.color = "#34d399";
+    textEl.textContent = "App Active (Offline)";
+    badgeEl.style.background = "rgba(245, 158, 11, 0.18)";
+    badgeEl.style.color = "#f59e0b";
   }
+}
+
+function handleIncomingLiveOrder(newOrder) {
+  if (!newOrder || !newOrder.orderId) return;
+
+  const deletedIds = new Set(getDeletedOrderIds());
+  if (deletedIds.has(newOrder.orderId)) return;
+
+  const existingIdx = adminOrders.findIndex(o => o.orderId === newOrder.orderId);
+  const isBrandNew = (existingIdx === -1);
+
+  if (isBrandNew) {
+    adminOrders.unshift(newOrder);
+    playOrderAlertChime();
+    showAdminToast(`🔔 Naya Order Aaya! #${newOrder.orderId} - ₹${newOrder.summary?.grandTotal || 0} (${newOrder.customer?.name || "Customer"})`);
+  } else {
+    adminOrders[existingIdx] = { ...adminOrders[existingIdx], ...newOrder };
+    showAdminToast(`🔔 Order #${newOrder.orderId} status: ${newOrder.status}`);
+  }
+
+  try {
+    localStorage.setItem(window.ORDERS_STORAGE_KEY || "nbs_raj_orders_history_v1", JSON.stringify(adminOrders));
+  } catch (_) {}
+
+  const countEl = document.getElementById("tabOrdersCount");
+  if (countEl) countEl.textContent = adminOrders.length;
+
+  renderAdminOrders();
+  updateKpiStats();
+}
+
+let liveEventSource = null;
+function setupRealtimePush() {
+  if (typeof EventSource === "undefined") return;
+  if (liveEventSource) {
+    try { liveEventSource.close(); } catch (_) {}
+  }
+
+  try {
+    liveEventSource = new EventSource(`${ORDERS_CLOUD_TOPIC}/sse`);
+    liveEventSource.onopen = () => {
+      console.log("🟢 Live Cloud Real-Time Push Connected!");
+      setConnectionStatus(true);
+    };
+    liveEventSource.onmessage = (event) => {
+      try {
+        const payload = JSON.parse(event.data);
+        if (payload.event === "message" && payload.message) {
+          const incomingOrder = safeParseJson(payload.message);
+          if (incomingOrder && incomingOrder.orderId) {
+            handleIncomingLiveOrder(incomingOrder);
+          }
+        }
+      } catch (err) {
+        console.log("SSE message parse note:", err);
+      }
+    };
+    liveEventSource.onerror = () => {
+      console.log("Cloud stream reconnecting...");
+    };
+  } catch (err) {
+    console.log("SSE setup note:", err);
+  }
+}
+
+function setupBroadcastChannel() {
+  if (typeof BroadcastChannel === "undefined") return;
+  try {
+    const bc = new BroadcastChannel("nbs_aquaveda_orders_channel");
+    bc.onmessage = (ev) => {
+      if (ev.data && (ev.data.type === "NEW_ORDER" || ev.data.type === "ORDER_STATUS_UPDATE") && ev.data.order) {
+        handleIncomingLiveOrder(ev.data.order);
+      }
+    };
+  } catch (_) {}
 }
 
 async function loadAdminOrders() {
   const localOrders = window.getStoredOrders ? window.getStoredOrders() : [];
+  const deletedIds = new Set(getDeletedOrderIds());
   let serverOrders = [];
+  let cloudOrders = [];
 
+  // 1. Fetch from Express Backend API
   try {
     const res = await fetch(`${API_BASE}/orders`, { cache: "no-store" });
     if (res.ok) {
@@ -161,23 +304,67 @@ async function loadAdminOrders() {
     setConnectionStatus(false);
   }
 
-  const map = new Map();
-  serverOrders.forEach(o => map.set(o.orderId, o));
-  localOrders.forEach(loc => {
-    if (!map.has(loc.orderId)) {
-      map.set(loc.orderId, loc);
-      if (isBackendOnline) {
-        fetch(`${API_BASE}/orders`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(loc)
-        }).catch(() => {});
+  // 2. Fetch from Cloud Realtime Channel (since=all)
+  try {
+    const cloudRes = await fetch(`${ORDERS_CLOUD_TOPIC}/json?poll=1&since=all`, { cache: "no-store" });
+    if (cloudRes.ok) {
+      const text = await cloudRes.text();
+      const lines = text.split("\n");
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const entry = JSON.parse(line);
+          if (entry.event === "message" && entry.message) {
+            const parsed = safeParseJson(entry.message);
+            if (parsed && parsed.orderId && parsed.customer) {
+              cloudOrders.push(parsed);
+            }
+          }
+        } catch (_) {}
+      }
+      setConnectionStatus(true);
+    }
+  } catch (err) {
+    console.log("Cloud poll note:", err);
+  }
+
+  // 3. Merge all orders with smart deduplication
+  const orderMap = new Map();
+
+  // Cloud orders first
+  cloudOrders.forEach(o => {
+    if (o && o.orderId && !deletedIds.has(o.orderId)) {
+      orderMap.set(o.orderId, o);
+    }
+  });
+
+  // Server orders merge
+  serverOrders.forEach(o => {
+    if (o && o.orderId && !deletedIds.has(o.orderId)) {
+      if (orderMap.has(o.orderId)) {
+        orderMap.set(o.orderId, { ...orderMap.get(o.orderId), ...o });
+      } else {
+        orderMap.set(o.orderId, o);
       }
     }
   });
 
-  adminOrders = Array.from(map.values()).sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+  // Local orders merge
+  localOrders.forEach(loc => {
+    if (loc && loc.orderId && !deletedIds.has(loc.orderId)) {
+      if (!orderMap.has(loc.orderId)) {
+        orderMap.set(loc.orderId, loc);
+      } else {
+        const existing = orderMap.get(loc.orderId);
+        if (loc.updatedAt && (!existing.updatedAt || new Date(loc.updatedAt) > new Date(existing.updatedAt))) {
+          orderMap.set(loc.orderId, { ...existing, ...loc });
+        }
+      }
+    }
+  });
+
+  adminOrders = Array.from(orderMap.values()).sort(
+    (a, b) => new Date(b.date || 0) - new Date(a.date || 0)
   );
 
   try {
@@ -230,10 +417,36 @@ async function loadAdminInquiries() {
     }
   } catch (_) {}
 
+  let cloudInq = [];
+  try {
+    const cloudRes = await fetch(`${INQUIRIES_CLOUD_TOPIC}/json?poll=1&since=all`, { cache: "no-store" });
+    if (cloudRes.ok) {
+      const text = await cloudRes.text();
+      const lines = text.split("\n");
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const entry = JSON.parse(line);
+          if (entry.event === "message" && entry.message) {
+            const parsed = safeParseJson(entry.message);
+            if (parsed && parsed.id) cloudInq.push(parsed);
+          }
+        } catch (_) {}
+      }
+    }
+  } catch (_) {}
+
   const map = new Map();
+  cloudInq.forEach(i => map.set(i.id, i));
   serverInq.forEach(i => map.set(i.id, i));
   localInq.forEach(i => { if (!map.has(i.id)) map.set(i.id, i); });
-  adminInquiries = Array.from(map.values());
+  adminInquiries = Array.from(map.values()).sort(
+    (a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0)
+  );
+
+  try {
+    localStorage.setItem(INQUIRIES_KEY, JSON.stringify(adminInquiries));
+  } catch (_) {}
 
   const countEl = document.getElementById("tabBulkCount");
   if (countEl) countEl.textContent = adminInquiries.length;
@@ -258,10 +471,36 @@ async function loadAdminContacts() {
     }
   } catch (_) {}
 
+  let cloudCon = [];
+  try {
+    const cloudRes = await fetch(`${CONTACTS_CLOUD_TOPIC}/json?poll=1&since=all`, { cache: "no-store" });
+    if (cloudRes.ok) {
+      const text = await cloudRes.text();
+      const lines = text.split("\n");
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const entry = JSON.parse(line);
+          if (entry.event === "message" && entry.message) {
+            const parsed = safeParseJson(entry.message);
+            if (parsed && parsed.id) cloudCon.push(parsed);
+          }
+        } catch (_) {}
+      }
+    }
+  } catch (_) {}
+
   const map = new Map();
+  cloudCon.forEach(c => map.set(c.id, c));
   serverCon.forEach(c => map.set(c.id, c));
   localCon.forEach(c => { if (!map.has(c.id)) map.set(c.id, c); });
-  adminContacts = Array.from(map.values());
+  adminContacts = Array.from(map.values()).sort(
+    (a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0)
+  );
+
+  try {
+    localStorage.setItem(CONTACTS_KEY, JSON.stringify(adminContacts));
+  } catch (_) {}
 
   const countEl = document.getElementById("tabContactsCount");
   if (countEl) countEl.textContent = adminContacts.length;
@@ -423,6 +662,28 @@ async function updateOrderStatus(orderId, newStatus) {
     localStorage.setItem(window.ORDERS_STORAGE_KEY || "nbs_raj_orders_history_v1", JSON.stringify(adminOrders));
   } catch (_) {}
 
+  // Broadcast updated order to Cloud Channel
+  try {
+    fetch(ORDERS_CLOUD_TOPIC, {
+      method: "POST",
+      headers: {
+        "Title": `Order #${orderId}: ${newStatus}`,
+        "Tags": "package,truck"
+      },
+      body: JSON.stringify(adminOrders[idx]),
+      keepalive: true
+    }).catch(() => {});
+  } catch (_) {}
+
+  // Broadcast to Cross-Tab Channel
+  try {
+    if (typeof BroadcastChannel !== "undefined") {
+      const bc = new BroadcastChannel("nbs_aquaveda_orders_channel");
+      bc.postMessage({ type: "ORDER_STATUS_UPDATE", order: adminOrders[idx] });
+      bc.close();
+    }
+  } catch (_) {}
+
   try {
     await fetch(`${API_BASE}/orders/${orderId}/status`, {
       method: "PATCH",
@@ -576,6 +837,14 @@ window.printOrderBill = printOrderBill;
 async function deleteOrder(orderId) {
   if (!confirm(`Delete Order #${orderId}?`)) return;
 
+  const deletedIds = getDeletedOrderIds();
+  if (!deletedIds.includes(orderId)) {
+    deletedIds.push(orderId);
+    try {
+      localStorage.setItem(DELETED_ORDERS_KEY, JSON.stringify(deletedIds));
+    } catch (_) {}
+  }
+
   adminOrders = adminOrders.filter(o => o.orderId !== orderId);
   try {
     localStorage.setItem(window.ORDERS_STORAGE_KEY || "nbs_raj_orders_history_v1", JSON.stringify(adminOrders));
@@ -709,6 +978,28 @@ async function handleImportWhatsAppOrder(e) {
     });
   } catch (_) {}
 
+  // Broadcast to Cloud Topic & Cross-Tab
+  try {
+    fetch(ORDERS_CLOUD_TOPIC, {
+      method: "POST",
+      headers: {
+        "Title": `💧 Imported Order: #${orderId} (₹${grandTotal})`,
+        "Priority": "high",
+        "Tags": "droplet,package"
+      },
+      body: JSON.stringify(importedOrder),
+      keepalive: true
+    }).catch(() => {});
+  } catch (_) {}
+
+  try {
+    if (typeof BroadcastChannel !== "undefined") {
+      const bc = new BroadcastChannel("nbs_aquaveda_orders_channel");
+      bc.postMessage({ type: "NEW_ORDER", order: importedOrder });
+      bc.close();
+    }
+  } catch (_) {}
+
   closeImportWhatsAppModal();
   document.getElementById("importWhatsAppForm")?.reset();
   const countEl = document.getElementById("tabOrdersCount");
@@ -782,6 +1073,28 @@ async function handleCreateManualOrder(e) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newOrder)
     });
+  } catch (_) {}
+
+  // Broadcast to Cloud Topic & Cross-Tab
+  try {
+    fetch(ORDERS_CLOUD_TOPIC, {
+      method: "POST",
+      headers: {
+        "Title": `💧 New Admin Order: #${newOrder.orderId} (₹${grandTotal})`,
+        "Priority": "high",
+        "Tags": "droplet,package"
+      },
+      body: JSON.stringify(newOrder),
+      keepalive: true
+    }).catch(() => {});
+  } catch (_) {}
+
+  try {
+    if (typeof BroadcastChannel !== "undefined") {
+      const bc = new BroadcastChannel("nbs_aquaveda_orders_channel");
+      bc.postMessage({ type: "NEW_ORDER", order: newOrder });
+      bc.close();
+    }
   } catch (_) {}
 
   closeNewOrderModal();
@@ -1068,4 +1381,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("newAdminOrderForm")?.addEventListener("submit", handleCreateManualOrder);
   document.getElementById("importWhatsAppForm")?.addEventListener("submit", handleImportWhatsAppOrder);
   checkAdminSession();
+  setupRealtimePush();
+  setupBroadcastChannel();
+  setInterval(() => {
+    loadAdminOrders();
+  }, 10000);
 });

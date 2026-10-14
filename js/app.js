@@ -347,6 +347,20 @@ ${requirements}`;
       localStorage.setItem("nbs_aquaveda_inquiries_v1", JSON.stringify(existingInquiries));
     } catch (_) {}
 
+    // Cloud Realtime Broadcast to Admin App
+    try {
+      fetch("https://ntfy.sh/nbs_aquaveda_inquiries_7355415447", {
+        method: "POST",
+        headers: {
+          "Title": `🏢 Bulk Water Inquiry: ${orgName || contactPerson}`,
+          "Priority": "default",
+          "Tags": "building,briefcase"
+        },
+        body: JSON.stringify(bulkPayload),
+        keepalive: true
+      }).catch(() => {});
+    } catch (_) {}
+
     try {
       fetch(`${window.APP_CONFIG.API_CONFIG.baseUrl}/bulk-inquiry`, {
         method: "POST",
@@ -419,6 +433,20 @@ ${message}`;
       const existingContacts = JSON.parse(localStorage.getItem("nbs_aquaveda_contacts_v1") || "[]");
       existingContacts.unshift(contactPayload);
       localStorage.setItem("nbs_aquaveda_contacts_v1", JSON.stringify(existingContacts));
+    } catch (_) {}
+
+    // Cloud Realtime Broadcast to Admin App
+    try {
+      fetch("https://ntfy.sh/nbs_aquaveda_contacts_7355415447", {
+        method: "POST",
+        headers: {
+          "Title": `✉️ Customer Message: ${name}`,
+          "Priority": "default",
+          "Tags": "envelope,speech_balloon"
+        },
+        body: JSON.stringify(contactPayload),
+        keepalive: true
+      }).catch(() => {});
     } catch (_) {}
 
     try {
