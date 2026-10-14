@@ -693,7 +693,7 @@
       </div>
 
       <div class="modal-content-body">
-        <form id="checkoutForm">
+        <form id="checkoutForm" onsubmit="return processCheckout(event)">
           <div class="checkout-grid-layout">
             <!-- Left: Delivery Address & Customer Form -->
             <div class="checkout-form-fields">
@@ -1051,13 +1051,13 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="js/config.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/checkout.js"></script>
-  <script src="js/orders.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/pwa.js"></script>
+  <!-- Scripts (Cache-Busted v2.2) -->
+  <script src="js/config.js?v=2.2"></script>
+  <script src="js/products.js?v=2.2"></script>
+  <script src="js/cart.js?v=2.2"></script>
+  <script src="js/checkout.js?v=2.2"></script>
+  <script src="js/orders.js?v=2.2"></script>
+  <script src="js/app.js?v=2.2"></script>
+  <script src="js/pwa.js?v=2.2"></script>
 </body>
 </html>

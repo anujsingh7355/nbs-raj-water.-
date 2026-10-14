@@ -16,16 +16,21 @@ function generateOrderId() {
 }
 
 // Validation helpers
+function cleanIndianMobile(raw) {
+  let cleaned = String(raw || "").replace(/\D/g, "");
+  if (cleaned.length === 11 && cleaned.startsWith("0")) cleaned = cleaned.slice(1);
+  if (cleaned.length === 12 && cleaned.startsWith("91")) cleaned = cleaned.slice(2);
+  return cleaned;
+}
+
 function validateIndianMobile(mobile) {
-  const cleaned = String(mobile).replace(/\D/g, "");
-  // Standard 10-digit Indian mobile starting with 6, 7, 8, or 9
-  return /^[6-9]\d{9}$/.test(cleaned);
+  const cleaned = cleanIndianMobile(mobile);
+  return /^[6-9]\d{9}$/.test(cleaned) || cleaned.length === 10;
 }
 
 function validatePincode(pincode) {
-  const cleaned = String(pincode).trim();
-  // Standard 6-digit Indian PIN code (cannot start with 0)
-  return /^[1-9][0-9]{5}$/.test(cleaned);
+  const cleaned = String(pincode || "").replace(/\D/g, "");
+  return cleaned.length === 6;
 }
 
 // Open Checkout Modal / View
@@ -189,14 +194,16 @@ async function processCheckout(event) {
   }
 
   // Extract form inputs
-  const fullName = document.getElementById("custName")?.value.trim();
-  const mobile = document.getElementById("custMobile")?.value.trim();
-  const whatsapp = document.getElementById("custWhatsapp")?.value.trim() || mobile;
-  const address = document.getElementById("custAddress")?.value.trim();
-  const city = document.getElementById("custCity")?.value.trim();
-  const state = document.getElementById("custState")?.value.trim();
-  const pincode = document.getElementById("custPincode")?.value.trim();
-  const instructions = document.getElementById("custInstructions")?.value.trim();
+  const fullName = (document.getElementById("custName")?.value || "").trim();
+  const rawMobile = (document.getElementById("custMobile")?.value || "").trim();
+  const rawWhatsapp = (document.getElementById("custWhatsapp")?.value || "").trim();
+  const mobile = cleanIndianMobile(rawMobile);
+  const whatsapp = rawWhatsapp ? cleanIndianMobile(rawWhatsapp) : mobile;
+  const address = (document.getElementById("custAddress")?.value || "").trim();
+  const city = (document.getElementById("custCity")?.value || "Unchahar, Raebareli").trim();
+  const state = (document.getElementById("custState")?.value || "Uttar Pradesh").trim();
+  const pincode = (document.getElementById("custPincode")?.value || "229404").trim().replace(/\D/g, "");
+  const instructions = (document.getElementById("custInstructions")?.value || "").trim();
   const paymentMethodEl = document.querySelector('input[name="paymentMethod"]:checked');
   const paymentMethod = paymentMethodEl ? paymentMethodEl.value : "Cash on Delivery";
 
@@ -211,39 +218,29 @@ async function processCheckout(event) {
     hasError = true;
   }
 
-  if (!mobile || !validateIndianMobile(mobile)) {
-    showFieldError("custMobile", "Please enter a valid 10-digit mobile number (e.g. 7355415447).");
+  if (!mobile || mobile.length !== 10) {
+    showFieldError("custMobile", "Please enter a valid 10-digit mobile number.");
     hasError = true;
   }
 
-  if (whatsapp && !validateIndianMobile(whatsapp)) {
+  if (rawWhatsapp && whatsapp.length !== 10) {
     showFieldError("custWhatsapp", "Please enter a valid 10-digit WhatsApp number.");
     hasError = true;
   }
 
-  if (!address || address.length < 5) {
-    showFieldError("custAddress", "Please provide complete street / door address.");
+  if (!address || address.length < 2) {
+    showFieldError("custAddress", "Please provide delivery address.");
     hasError = true;
   }
 
-  if (!city) {
-    showFieldError("custCity", "City name is required.");
-    hasError = true;
-  }
-
-  if (!state) {
-    showFieldError("custState", "State is required.");
-    hasError = true;
-  }
-
-  if (!pincode || !validatePincode(pincode)) {
+  if (!pincode || pincode.length !== 6) {
     showFieldError("custPincode", "Please enter a valid 6-digit PIN code.");
     hasError = true;
   }
 
   if (hasError) {
     if (window.showToast) {
-      window.showToast("Please correct the highlighted form errors.", "error");
+      window.showToast("Please fill all required delivery details.", "error");
     }
     return;
   }
@@ -280,10 +277,12 @@ async function processCheckout(event) {
   // 1. Save to LocalStorage for "My Orders"
   window.saveOrderToStorage(orderData);
 
-  // 2. Realtime Cloud Broadcast to Admin App (Works on Netlify, Mobile, Localhost & Cloud)
+  // 2. Realtime Cloud Broadcast to Admin App (Awaited with timeout for guaranteed transmission)
   const CLOUD_ORDERS_URL = "https://ntfy.sh/nbs_aquaveda_live_orders_7355415447";
   try {
-    fetch(CLOUD_ORDERS_URL, {
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    const timeoutId = controller ? setTimeout(() => controller.abort(), 2000) : null;
+    await fetch(CLOUD_ORDERS_URL, {
       method: "POST",
       headers: {
         "Title": `New Water Order: #${orderId} (Rs ${orderData.summary.grandTotal})`,
@@ -291,10 +290,17 @@ async function processCheckout(event) {
         "Tags": "droplet,package,bell"
       },
       body: JSON.stringify(orderData),
+      signal: controller ? controller.signal : undefined,
       keepalive: true
-    }).catch(e => console.log("Cloud sync note:", e));
+    });
+    if (timeoutId) clearTimeout(timeoutId);
   } catch (err) {
-    console.log("Cloud sync error:", err);
+    console.log("Cloud sync note:", err);
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(CLOUD_ORDERS_URL, JSON.stringify(orderData));
+      }
+    } catch (_) {}
   }
 
   // 3. Cross-Tab Instant BroadcastChannel (0ms sync if Admin is open in same browser)
@@ -319,18 +325,18 @@ async function processCheckout(event) {
     console.log("Backend sync skipped:", err);
   }
 
-  // 3. Clear cart
+  // 5. Clear cart
   window.cart.clearCart();
 
-  // 4. Generate formatted WhatsApp message
+  // 6. Generate formatted WhatsApp message
   const whatsappMsg = buildWhatsAppMessage(orderData);
   const targetNumber = window.APP_CONFIG?.WHATSAPP_NUMBER || "917355415447";
   const whatsappUrl = `https://wa.me/${targetNumber}?text=${encodeURIComponent(whatsappMsg)}`;
 
-  // 5. Open WhatsApp in new tab / mobile app
+  // 7. Open WhatsApp in new tab / mobile app
   window.open(whatsappUrl, "_blank");
 
-  // 6. Close checkout and show Order Confirmation modal
+  // 8. Close checkout and show Order Confirmation modal
   closeCheckoutModal();
   showOrderConfirmationModal(orderData);
 
@@ -409,9 +415,25 @@ function closeOrderConfirmationModal() {
 }
 
 // Bind checkout form submit event
-document.addEventListener("DOMContentLoaded", () => {
+function initCheckoutForm() {
   const form = document.getElementById("checkoutForm");
   if (form) {
+    form.removeEventListener("submit", processCheckout);
     form.addEventListener("submit", processCheckout);
   }
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initCheckoutForm);
+} else {
+  initCheckoutForm();
+}
+
+window.processCheckout = processCheckout;
+window.validateIndianMobile = validateIndianMobile;
+window.cleanIndianMobile = cleanIndianMobile;
+window.openCheckoutModal = openCheckoutModal;
+window.closeCheckoutModal = closeCheckoutModal;
+window.handleBuyNow = handleBuyNow;
+window.showOrderConfirmationModal = showOrderConfirmationModal;
+window.closeOrderConfirmationModal = closeOrderConfirmationModal;

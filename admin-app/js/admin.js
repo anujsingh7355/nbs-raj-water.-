@@ -375,6 +375,7 @@ async function loadAdminOrders() {
   if (countEl) countEl.textContent = adminOrders.length;
 
   renderAdminOrders();
+  updateKpiStats();
 }
 
 async function loadAdminProducts() {
