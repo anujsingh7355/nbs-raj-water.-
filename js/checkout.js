@@ -277,30 +277,43 @@ async function processCheckout(event) {
   // 1. Save to LocalStorage for "My Orders"
   window.saveOrderToStorage(orderData);
 
-  // 2. Realtime Cloud Broadcast to Admin App (Awaited with timeout for guaranteed transmission)
-  const CLOUD_ORDERS_URL = "https://ntfy.sh/nbs_aquaveda_live_orders_7355415447";
+  // 2. Realtime Cloud Broadcast to Standalone Admin App (High reliability JSON publish)
   try {
-    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-    const timeoutId = controller ? setTimeout(() => controller.abort(), 2000) : null;
-    await fetch(CLOUD_ORDERS_URL, {
-      method: "POST",
-      headers: {
-        "Title": `New Water Order: #${orderId} (Rs ${orderData.summary.grandTotal})`,
-        "Priority": "high",
-        "Tags": "droplet,package,bell"
-      },
-      body: JSON.stringify(orderData),
-      signal: controller ? controller.signal : undefined,
-      keepalive: true
+    const jsonPayload = JSON.stringify({
+      topic: "nbs_aquaveda_live_orders_7355415447",
+      title: `New Water Order: #${orderId} (Rs ${orderData.summary.grandTotal})`,
+      message: JSON.stringify(orderData),
+      priority: 4,
+      tags: ["droplet", "package", "bell"]
     });
-    if (timeoutId) clearTimeout(timeoutId);
+
+    const directUrl = "https://ntfy.sh/nbs_aquaveda_live_orders_7355415447";
+    const postPromise = fetch("https://ntfy.sh", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: jsonPayload,
+      keepalive: true
+    }).catch(() => {
+      return fetch(directUrl, {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        keepalive: true
+      });
+    });
+
+    // Wait up to 1000ms for network transmission, then proceed
+    await Promise.race([
+      postPromise,
+      new Promise(resolve => setTimeout(resolve, 1000))
+    ]);
+
+    if (navigator.sendBeacon) {
+      try {
+        navigator.sendBeacon(directUrl, JSON.stringify(orderData));
+      } catch (_) {}
+    }
   } catch (err) {
     console.log("Cloud sync note:", err);
-    try {
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(CLOUD_ORDERS_URL, JSON.stringify(orderData));
-      }
-    } catch (_) {}
   }
 
   // 3. Cross-Tab Instant BroadcastChannel (0ms sync if Admin is open in same browser)

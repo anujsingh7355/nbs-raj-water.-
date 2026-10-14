@@ -316,7 +316,7 @@ async function loadAdminOrders() {
           const entry = JSON.parse(line);
           if (entry.event === "message" && entry.message) {
             const parsed = safeParseJson(entry.message);
-            if (parsed && parsed.orderId && parsed.customer) {
+            if (parsed && parsed.orderId) {
               cloudOrders.push(parsed);
             }
           }
@@ -1376,7 +1376,7 @@ window.addEventListener("storage", (e) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+function initAdminApp() {
   document.getElementById("adminLoginForm")?.addEventListener("submit", handleAdminLogin);
   document.getElementById("productEditForm")?.addEventListener("submit", handleSaveProduct);
   document.getElementById("newAdminOrderForm")?.addEventListener("submit", handleCreateManualOrder);
@@ -1386,5 +1386,11 @@ document.addEventListener("DOMContentLoaded", () => {
   setupBroadcastChannel();
   setInterval(() => {
     loadAdminOrders();
-  }, 10000);
-});
+  }, 5000);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAdminApp);
+} else {
+  initAdminApp();
+}

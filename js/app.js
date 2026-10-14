@@ -475,12 +475,27 @@ function openDirectWhatsAppChat(defaultText) {
 }
 window.openDirectWhatsAppChat = openDirectWhatsAppChat;
 
+function handleWhatsAppOrderCta() {
+  const summary = window.cart ? window.cart.getSummary() : { items: [] };
+  if (!summary.items || summary.items.length === 0) {
+    if (window.cart && typeof window.cart.addItem === "function") {
+      window.cart.addItem("nbs-20l", 1);
+    }
+  }
+  if (typeof openCheckoutModal === "function") {
+    openCheckoutModal();
+  } else {
+    openDirectWhatsAppChat();
+  }
+}
+window.handleWhatsAppOrderCta = handleWhatsAppOrderCta;
+
 /**
  * =========================================================================
  * INITIALIZE APP ON DOM READY
  * =========================================================================
  */
-document.addEventListener("DOMContentLoaded", () => {
+function initCustomerApp() {
   renderProducts();
   setupCategoryFilters();
   setupSearchInputs();
@@ -488,4 +503,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setupMobileMenu();
   setupBulkOrderForm();
   setupContactForm();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initCustomerApp);
+} else {
+  initCustomerApp();
+}
